@@ -1,0 +1,48 @@
+name: Update Contributions Badge
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query contributions since 16 Feb 2026 (incl. private)
+        env:
+          GH_TOKEN: ${{ secrets.CONTRIB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # contributionsCollection allows a max range of 1 year. Cap "to" at
+          # from + 1 year so the query keeps working past 16 Feb 2027.
+          TO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          MAX_TO="2027-02-15T23:59:59Z"
+          if [[ "$TO" > "$MAX_TO" ]]; then TO="$MAX_TO"; fi
+
+          COUNT=$(gh api graphql \
+            -f query='query($from: DateTime!, $to: DateTime!) {
+              user(login: "TomKlotzPro") {
+                contributionsCollection(from: $from, to: $to) {
+                  contributionCalendar { totalContributions }
+                }
+              }
+            }' \
+            -F from="2026-02-16T00:00:00Z" \
+            -F to="$TO" \
+            --jq '.data.user.contributionsCollection.contributionCalendar.totalContributions')
+
+          echo "Contributions since 16 Feb 2026: $COUNT"
+          mkdir -p dist
+          printf '{"schemaVersion":1,"label":"Contributions since 16 Feb 2026","message":"%s","color":"0055A4","labelColor":"EF4135","style":"for-the-badge","logoSvg":""}\n' "$COUNT" > dist/contributions.json
+
+      - name: Publish badge JSON to the badges branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: badges
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
