@@ -7,6 +7,11 @@
   <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=1000&color=0055A4&center=true&vCenter=true&width=600&lines=Software+Engineer+%40+Photoroom;TypeScript+%2F+React+%2F+Next.js;Ex-Algolia+%C2%B7+Ex-CastorDoc+%C2%B7+Ministry+of+Army+%F0%9F%87%AB%F0%9F%87%B7" alt="Typing intro" />
 </a>
 
+<br/>
+
+<img src="https://komarev.com/ghpvc/?username=TomKlotzPro&style=for-the-badge&color=0055A4&label=PROFILE+VIEWS" alt="Profile views" />
+<a href="https://github.com/TomKlotzPro?tab=followers"><img src="https://img.shields.io/github/followers/TomKlotzPro?style=for-the-badge&logo=github&logoColor=white&label=FOLLOWERS&color=EF4135&labelColor=333" alt="Followers" /></a>
+
 </div>
 
 ---
@@ -68,13 +73,16 @@ const tom = {
 
 ---
 
-### `> run --game-of-life` 🧬
+### `> run --minesweeper` 💣
 
 <div align="center">
 
-<img src="https://github4life.herokuapp.com/TomKlotzPro.gif" width="100%" alt="Conway's Game of Life seeded from my contribution graph" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/minesweeper-dark.svg" />
+  <img src="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/minesweeper.svg" width="100%" alt="Minesweeper playing across my contribution graph" />
+</picture>
 
-<sub><code>mes contributions, livrées au jeu de la vie de Conway</code></sub>
+<sub><code>déminage en cours — chaque case est une contribution</code></sub>
 
 </div>
 
