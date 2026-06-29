@@ -15,7 +15,7 @@
 
 ```ts
 const tom = {
-  role:      "Product Engineer",
+  role:      "Software Engineer",
   company:   "@Photoroom",
   location:  "Paris, France 🇫🇷",
   formerly:  ["@Algolia", "@CastorDoc", "Ministry of Army 🇫🇷"],
@@ -47,10 +47,13 @@ const tom = {
 
 <div align="center">
 
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=TomKlotzPro&show_icons=true&hide_border=true&title_color=0055A4&icon_color=EF4135&text_color=555&bg_color=FFFFFF" alt="GitHub stats" />
-<img height="165" src="https://github-readme-streak-stats.herokuapp.com/?user=TomKlotzPro&hide_border=true&background=FFFFFF&ring=0055A4&fire=EF4135&currStreakLabel=0055A4" alt="GitHub streak" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=TomKlotzPro&theme=default" width="100%" alt="Profile summary" />
 
-<img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=TomKlotzPro&layout=compact&hide_border=true&title_color=0055A4&text_color=555&bg_color=FFFFFF" alt="Top languages" />
+<img height="190" src="https://github-readme-streak-stats.herokuapp.com/?user=TomKlotzPro&hide_border=true&background=FFFFFF&ring=0055A4&fire=EF4135&currStreakLabel=0055A4" alt="GitHub streak" />
+<img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=TomKlotzPro&theme=default" alt="Most-used languages" />
+
+<img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=TomKlotzPro&theme=default" alt="Repos per language" />
+<img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=TomKlotzPro&theme=default&utcOffset=2" alt="Productive time" />
 
 </div>
 
