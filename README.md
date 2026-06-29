@@ -46,7 +46,7 @@ const tom = {
 ### `> service-record`
 
 > 🎖️ **Served 3 years** — Ministère des Armées 🇫🇷
-> 🇫🇷 Honneur, discipline, sang-froid sous pression
+> Honneur, discipline, sang-froid sous pression
 
 ---
 
