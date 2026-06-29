@@ -78,8 +78,8 @@ const tom = {
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/minesweeper-dark.svg" />
-  <img src="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/minesweeper.svg" width="100%" alt="Minesweeper playing across my contribution graph" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/minesweeper-contribution-graph-dark.svg" />
+  <img src="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/minesweeper-contribution-graph.svg" width="100%" alt="Minesweeper playing across my contribution graph" />
 </picture>
 
 <sub><code>déminage en cours — chaque case est une contribution</code></sub>
