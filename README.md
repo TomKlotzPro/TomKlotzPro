@@ -62,10 +62,7 @@ const tom = {
 
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=TomKlotzPro&starting_year=2026&hide_border=true&background=00000000&ring=0055A4&fire=EF4135&currStreakLabel=58a6ff&sideLabels=c9d1d9&sideNums=f0f6fc&currStreakNum=f0f6fc&dates=8b949e" />
-  <img height="190" src="https://streak-stats.demolab.com/?user=TomKlotzPro&starting_year=2026&hide_border=true&background=00000000&ring=0055A4&fire=EF4135&currStreakLabel=0055A4&sideLabels=555555&sideNums=24292f&currStreakNum=24292f&dates=57606a" alt="GitHub streak since 2026" />
-</picture>
+<img src="https://img.shields.io/badge/Contributions_since_16_Feb_2026-696-0055A4?style=for-the-badge&logo=github&logoColor=white&labelColor=EF4135" alt="696 contributions since 16 Feb 2026" />
 
 </div>
 
