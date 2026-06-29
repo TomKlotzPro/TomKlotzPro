@@ -43,17 +43,31 @@ const tom = {
 
 ---
 
+### `> service-record --photoroom`
+
+> 🎖️ **Rookie of the Year** — earned in the first 4.5 months on the front line
+> ⚔️ **200+ PRs merged** — and counting
+> 🛡️ **Campaigns shipped** — Custom Virtual Models · AI Video Generation · Shareable Links · Design System
+
+---
+
 ### `> stats`
 
 <div align="center">
 
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=TomKlotzPro&theme=default" width="100%" alt="Profile summary" />
-
 <img height="190" src="https://github-readme-streak-stats.herokuapp.com/?user=TomKlotzPro&hide_border=true&background=FFFFFF&ring=0055A4&fire=EF4135&currStreakLabel=0055A4" alt="GitHub streak" />
-<img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=TomKlotzPro&theme=default" alt="Most-used languages" />
 
-<img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=TomKlotzPro&theme=default" alt="Repos per language" />
-<img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=TomKlotzPro&theme=default&utcOffset=2" alt="Productive time" />
+</div>
+
+---
+
+### `> deploy --snake` 🐍
+
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/snake.svg" width="100%" alt="Contribution snake on patrol" />
+
+<sub><code>la chasse aux contributions — en bleu, blanc, rouge</code></sub>
 
 </div>
 
