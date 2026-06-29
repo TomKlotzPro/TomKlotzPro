@@ -43,11 +43,18 @@ const tom = {
 
 ---
 
-### `> service-record --photoroom`
+### `> service-record`
 
-> 🎖️ **Rookie of the Year** — earned in the first 4.5 months on the front line
+> 🎖️ **Served 3 years** — Ministère des Armées 🇫🇷
+> 🇫🇷 Honneur, discipline, sang-froid sous pression
+
+---
+
+### `> photoroom --highlights`
+
+> 🏆 **Rookie of the Year** — earned in the first 4.5 months
 > ⚔️ **200+ PRs merged** — and counting
-> 🛡️ **Campaigns shipped** — Custom Virtual Models · AI Video Generation · Shareable Links · Design System
+> 🛡️ **Shipped** — Custom Virtual Models · AI Video Generation · Shareable Links · Design System
 
 ---
 
@@ -55,7 +62,7 @@ const tom = {
 
 <div align="center">
 
-<img height="190" src="https://github-readme-streak-stats.herokuapp.com/?user=TomKlotzPro&hide_border=true&background=FFFFFF&ring=0055A4&fire=EF4135&currStreakLabel=0055A4" alt="GitHub streak" />
+<img height="190" src="https://github-readme-streak-stats.herokuapp.com/?user=TomKlotzPro&starting_year=2026&hide_border=true&background=FFFFFF&ring=0055A4&fire=EF4135&currStreakLabel=0055A4" alt="GitHub streak" />
 
 </div>
 
