@@ -62,7 +62,10 @@ const tom = {
 
 <div align="center">
 
-<img height="190" src="https://github-readme-streak-stats.herokuapp.com/?user=TomKlotzPro&starting_year=2026&hide_border=true&background=FFFFFF&ring=0055A4&fire=EF4135&currStreakLabel=0055A4" alt="GitHub streak" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=TomKlotzPro&starting_year=2026&hide_border=true&background=00000000&ring=0055A4&fire=EF4135&currStreakLabel=58a6ff&sideLabels=c9d1d9&sideNums=f0f6fc&currStreakNum=f0f6fc&dates=8b949e" />
+  <img height="190" src="https://streak-stats.demolab.com/?user=TomKlotzPro&starting_year=2026&hide_border=true&background=00000000&ring=0055A4&fire=EF4135&currStreakLabel=0055A4&sideLabels=555555&sideNums=24292f&currStreakNum=24292f&dates=57606a" alt="GitHub streak since 2026" />
+</picture>
 
 </div>
 
