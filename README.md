@@ -67,7 +67,7 @@ const tom = {
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/Contributions_since_16_Feb_2026-696-0055A4?style=for-the-badge&logo=github&logoColor=white&labelColor=EF4135" alt="696 contributions since 16 Feb 2026" />
+<img src="https://img.shields.io/badge/Contributions_%40_Photoroom-786-0055A4?style=for-the-badge&logo=github&logoColor=white&labelColor=EF4135" alt="786 contributions at Photoroom" />
 
 </div>
 
