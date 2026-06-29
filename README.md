@@ -68,13 +68,13 @@ const tom = {
 
 ---
 
-### `> deploy --snake` 🐍
+### `> run --game-of-life` 🧬
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/TomKlotzPro/TomKlotzPro/output/snake.svg" width="100%" alt="Contribution snake on patrol" />
+<img src="https://github4life.herokuapp.com/TomKlotzPro.gif" width="100%" alt="Conway's Game of Life seeded from my contribution graph" />
 
-<sub><code>la chasse aux contributions — en bleu, blanc, rouge</code></sub>
+<sub><code>mes contributions, livrées au jeu de la vie de Conway</code></sub>
 
 </div>
 
