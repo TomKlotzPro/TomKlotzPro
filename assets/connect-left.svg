@@ -1,0 +1,17 @@
+<svg width="296" height="184" viewBox="0 0 296 184" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Connect — LinkedIn: tom-klotz">
+  <style>
+    text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .mono { font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace; }
+  </style>
+  <rect width="330" height="184" rx="18" fill="#0B0E14"/>
+  <rect x="0.5" y="0.5" width="329" height="183" rx="17.5" stroke="#FFFFFF" stroke-opacity="0.08"/>
+
+  <text x="48" y="48" class="mono" font-size="14" fill="#5F6B84"><tspan fill="#5B8CFF">~</tspan> <tspan fill="#8A93A5">$</tspan> connect <tspan fill="#667089">--socials</tspan></text>
+
+  <rect x="48.5" y="70.5" width="239" height="87" rx="13.5" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+  <rect x="68" y="99" width="30" height="30" rx="7" fill="#0A66C2"/>
+  <text x="83" y="120" text-anchor="middle" font-size="15" font-weight="800" fill="#FFFFFF">in</text>
+  <text x="110" y="112" font-size="14.5" font-weight="600" fill="#E8ECF4">LinkedIn</text>
+  <text x="110" y="130" class="mono" font-size="11" fill="#5F6B84">tom-klotz</text>
+  <text x="266" y="119" text-anchor="end" class="mono" font-size="14" fill="#5F6B84">↗</text>
+</svg>
