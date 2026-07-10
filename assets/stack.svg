@@ -1,0 +1,54 @@
+<svg width="850" height="176" viewBox="0 0 850 176" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tech stack: TypeScript, React, Next.js, Node.js, Java, Python, SQL, Git">
+  <defs>
+    <clipPath id="panel"><rect width="850" height="176" rx="18"/></clipPath>
+  </defs>
+  <style>
+    text { font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace; }
+  </style>
+
+  <g clip-path="url(#panel)">
+    <rect width="850" height="176" fill="#0B0E14"/>
+  </g>
+
+  <text x="48" y="52" font-size="14" fill="#5F6B84"><tspan fill="#5B8CFF">~</tspan> <tspan fill="#8A93A5">$</tspan> tech <tspan fill="#667089">--stack</tspan></text>
+
+  <!-- row 1 -->
+  <g font-size="13" fill="#C7CEDB">
+    <rect x="48" y="74" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="72" cy="92" r="4.5" fill="#3178C6"/>
+    <text x="86" y="96.5">TypeScript</text>
+
+    <rect x="234" y="74" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="258" cy="92" r="4.5" fill="#61DAFB"/>
+    <text x="272" y="96.5">React</text>
+
+    <rect x="420" y="74" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="444" cy="92" r="4.5" fill="#EDEDED"/>
+    <text x="458" y="96.5">Next.js</text>
+
+    <rect x="606" y="74" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="630" cy="92" r="4.5" fill="#5FA04E"/>
+    <text x="644" y="96.5">Node.js</text>
+  </g>
+
+  <!-- row 2 -->
+  <g font-size="13" fill="#C7CEDB">
+    <rect x="48" y="120" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="72" cy="138" r="4.5" fill="#ED8B00"/>
+    <text x="86" y="142.5">Java</text>
+
+    <rect x="234" y="120" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="258" cy="138" r="4.5" fill="#3776AB"/>
+    <text x="272" y="142.5">Python</text>
+
+    <rect x="420" y="120" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="444" cy="138" r="4.5" fill="#4479A1"/>
+    <text x="458" y="142.5">SQL</text>
+
+    <rect x="606" y="120" width="172" height="36" rx="18" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
+    <circle cx="630" cy="138" r="4.5" fill="#F05032"/>
+    <text x="644" y="142.5">Git</text>
+  </g>
+
+  <rect x="0.5" y="0.5" width="849" height="175" rx="17.5" stroke="#FFFFFF" stroke-opacity="0.08"/>
+</svg>
