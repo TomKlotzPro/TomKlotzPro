@@ -1,7 +1,6 @@
 <svg width="850" height="266" viewBox="0 0 850 266" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Career timeline: Algolia (search engine, software engineering), CastorDoc (data catalog, fullstack engineering), Ministère des Armées (defense, software engineering), Photoroom (AI, software engineering)">
   <defs>
     <clipPath id="panel"><rect width="850" height="266" rx="18"/></clipPath>
-    <clipPath id="flagNode"><circle cx="510" cy="148" r="12.5"/></clipPath>
   </defs>
   <style>
     text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
