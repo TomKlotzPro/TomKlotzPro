@@ -1,6 +1,7 @@
 <svg width="850" height="266" viewBox="0 0 850 266" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Career timeline: Algolia (search engine, software engineering), CastorDoc (data catalog, fullstack engineering), Ministère des Armées (defense, software engineering), Photoroom (AI, software engineering)">
   <defs>
     <clipPath id="panel"><rect width="850" height="266" rx="18"/></clipPath>
+    <clipPath id="flagNode"><circle cx="510" cy="148" r="12.5"/></clipPath>
   </defs>
   <style>
     text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
@@ -36,9 +37,9 @@
   <!-- CastorDoc -->
   <g>
     <text x="320" y="104" text-anchor="middle" class="mono" font-size="11" fill="#5F6B84">ca570rd</text>
-    <circle cx="320" cy="148" r="20" fill="#0B0E14" stroke="#0EB5A3" stroke-width="2"/>
-    <circle cx="320" cy="148" r="12.5" fill="#0EB5A3"/>
-    <text x="320" y="152.5" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#06251F">C</text>
+    <circle cx="320" cy="148" r="20" fill="#0B0E14" stroke="#FF9466" stroke-width="2"/>
+    <circle cx="320" cy="148" r="12.5" fill="#FF7847"/>
+    <text x="320" y="152.5" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#3A1503">C</text>
     <text x="320" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">CastorDoc</text>
     <text x="320" y="210" text-anchor="middle" font-size="12" fill="#8A93A5">Data catalog</text>
     <text x="320" y="228" text-anchor="middle" font-size="11" fill="#5F6B84">fullstack engineering</text>
@@ -47,9 +48,12 @@
   <!-- Ministère des Armées -->
   <g>
     <text x="510" y="104" text-anchor="middle" class="mono" font-size="11" fill="#5F6B84">a5m335f</text>
-    <circle cx="510" cy="148" r="20" fill="#0B0E14" stroke="#C9A227" stroke-width="2"/>
-    <circle cx="510" cy="148" r="12.5" fill="#C9A227"/>
-    <path d="M510 141.5 l1.9 3.9 4.3 0.6 -3.1 3 0.7 4.3 -3.8 -2 -3.8 2 0.7 -4.3 -3.1 -3 4.3 -0.6 z" fill="#1D1608"/>
+    <circle cx="510" cy="148" r="20" fill="#0B0E14" stroke="#F5F7FA" stroke-opacity="0.75" stroke-width="2"/>
+    <g clip-path="url(#flagNode)">
+      <rect x="497.5" y="135.5" width="8.34" height="25" fill="#2A63F6"/>
+      <rect x="505.84" y="135.5" width="8.33" height="25" fill="#F5F7FA"/>
+      <rect x="514.17" y="135.5" width="8.33" height="25" fill="#E5484D"/>
+    </g>
     <text x="510" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">Ministère des Armées</text>
     <text x="510" y="210" text-anchor="middle" font-size="12" fill="#8A93A5">Defense · 3 years of service</text>
     <text x="510" y="228" text-anchor="middle" font-size="11" fill="#5F6B84">software engineering</text>
