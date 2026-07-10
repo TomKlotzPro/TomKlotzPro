@@ -1,0 +1,36 @@
+<svg width="850" height="100" viewBox="0 0 850 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Made in Paris · liberté, égalité, déployé">
+  <defs>
+    <clipPath id="panel"><rect width="850" height="100" rx="18"/></clipPath>
+    <linearGradient id="tricolore" x1="0" y1="0" x2="850" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2A63F6"/>
+      <stop offset="0.5" stop-color="#F5F7FA"/>
+      <stop offset="1" stop-color="#E5484D"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .mono { font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace; }
+    @keyframes blink { 0%, 45% { opacity: 1 } 50%, 95% { opacity: 0 } 100% { opacity: 1 } }
+    .cursor { animation: blink 1.1s steps(1) infinite; }
+  </style>
+
+  <g clip-path="url(#panel)">
+    <rect width="850" height="100" fill="#0B0E14"/>
+    <rect y="97" width="850" height="3" fill="url(#tricolore)"/>
+  </g>
+
+  <text x="48" y="56" class="mono" font-size="13" fill="#5F6B84"><tspan fill="#5B8CFF">~</tspan> <tspan fill="#8A93A5">$</tspan> exit 0</text>
+  <rect class="cursor" x="136" y="45" width="7" height="14" fill="#5B8CFF"/>
+
+  <g>
+    <rect x="368" y="36" width="7" height="14" rx="2" fill="#2A63F6"/>
+    <rect x="375" y="36" width="7" height="14" fill="#F5F7FA"/>
+    <rect x="382" y="36" width="7" height="14" rx="2" fill="#E5484D"/>
+    <text x="399" y="48" font-size="13.5" fill="#C3CBDA">Made in Paris</text>
+    <text x="425" y="72" text-anchor="middle" class="mono" font-size="12" fill="#5F6B84">liberté · égalité · déployé</text>
+  </g>
+
+  <text x="802" y="56" text-anchor="end" class="mono" font-size="12" fill="#384157">@TomKlotzPro</text>
+
+  <rect x="0.5" y="0.5" width="849" height="99" rx="17.5" stroke="#FFFFFF" stroke-opacity="0.08"/>
+</svg>

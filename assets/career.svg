@@ -1,6 +1,6 @@
-<svg width="850" height="252" viewBox="0 0 850 252" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Career timeline: Algolia, CastorDoc, Ministère des Armées, Photoroom">
+<svg width="850" height="266" viewBox="0 0 850 266" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Career timeline: Algolia (search engine, software engineering), CastorDoc (data catalog, fullstack engineering), Ministère des Armées (defense, software engineering), Photoroom (AI, software engineering)">
   <defs>
-    <clipPath id="panel"><rect width="850" height="252" rx="18"/></clipPath>
+    <clipPath id="panel"><rect width="850" height="266" rx="18"/></clipPath>
   </defs>
   <style>
     text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
@@ -12,7 +12,7 @@
   </style>
 
   <g clip-path="url(#panel)">
-    <rect width="850" height="252" fill="#0B0E14"/>
+    <rect width="850" height="266" fill="#0B0E14"/>
   </g>
 
   <text x="48" y="52" class="mono" font-size="14" fill="#5F6B84"><tspan fill="#5B8CFF">~</tspan> <tspan fill="#8A93A5">$</tspan> git log <tspan fill="#667089">--reverse</tspan> career/</text>
@@ -28,8 +28,9 @@
     <circle cx="130" cy="148" r="20" fill="#0B0E14" stroke="#3E63DD" stroke-width="2"/>
     <circle cx="130" cy="148" r="12.5" fill="#003DFF"/>
     <text x="130" y="152.5" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#FFFFFF">A</text>
-    <text x="130" y="192" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">Algolia</text>
-    <text x="130" y="212" text-anchor="middle" font-size="12" fill="#8A93A5">API clients · open source</text>
+    <text x="130" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">Algolia</text>
+    <text x="130" y="210" text-anchor="middle" font-size="12" fill="#8A93A5">Search engine</text>
+    <text x="130" y="228" text-anchor="middle" font-size="11" fill="#5F6B84">software engineering</text>
   </g>
 
   <!-- CastorDoc -->
@@ -38,8 +39,9 @@
     <circle cx="320" cy="148" r="20" fill="#0B0E14" stroke="#0EB5A3" stroke-width="2"/>
     <circle cx="320" cy="148" r="12.5" fill="#0EB5A3"/>
     <text x="320" y="152.5" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#06251F">C</text>
-    <text x="320" y="192" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">CastorDoc</text>
-    <text x="320" y="212" text-anchor="middle" font-size="12" fill="#8A93A5">product engineering</text>
+    <text x="320" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">CastorDoc</text>
+    <text x="320" y="210" text-anchor="middle" font-size="12" fill="#8A93A5">Data catalog</text>
+    <text x="320" y="228" text-anchor="middle" font-size="11" fill="#5F6B84">fullstack engineering</text>
   </g>
 
   <!-- Ministère des Armées -->
@@ -48,8 +50,9 @@
     <circle cx="510" cy="148" r="20" fill="#0B0E14" stroke="#C9A227" stroke-width="2"/>
     <circle cx="510" cy="148" r="12.5" fill="#C9A227"/>
     <path d="M510 141.5 l1.9 3.9 4.3 0.6 -3.1 3 0.7 4.3 -3.8 -2 -3.8 2 0.7 -4.3 -3.1 -3 4.3 -0.6 z" fill="#1D1608"/>
-    <text x="510" y="192" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">Ministère des Armées</text>
-    <text x="510" y="212" text-anchor="middle" font-size="12" fill="#8A93A5">3 years of service</text>
+    <text x="510" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">Ministère des Armées</text>
+    <text x="510" y="210" text-anchor="middle" font-size="12" fill="#8A93A5">Defense · 3 years of service</text>
+    <text x="510" y="228" text-anchor="middle" font-size="11" fill="#5F6B84">software engineering</text>
   </g>
 
   <!-- Photoroom -->
@@ -59,9 +62,10 @@
     <circle cx="700" cy="148" r="20" fill="#0B0E14" stroke="#A98BFF" stroke-width="2"/>
     <circle cx="700" cy="148" r="12.5" fill="#6E29F7"/>
     <text x="700" y="152.5" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#FFFFFF">P</text>
-    <text x="700" y="192" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">Photoroom</text>
-    <text x="700" y="212" text-anchor="middle" font-size="12" fill="#8A93A5">AI photo tools · now</text>
+    <text x="700" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#E8ECF4">Photoroom</text>
+    <text x="700" y="210" text-anchor="middle" font-size="12" fill="#8A93A5">AI photo editing</text>
+    <text x="700" y="228" text-anchor="middle" font-size="11" fill="#5F6B84">software engineering · now</text>
   </g>
 
-  <rect x="0.5" y="0.5" width="849" height="251" rx="17.5" stroke="#FFFFFF" stroke-opacity="0.08"/>
+  <rect x="0.5" y="0.5" width="849" height="265" rx="17.5" stroke="#FFFFFF" stroke-opacity="0.08"/>
 </svg>
