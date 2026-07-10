@@ -4,7 +4,7 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&height=140&color=0:0055A4,50:FFFFFF,100:EF4135&text=Tom%20Klotz&fontColor=0055A4&fontSize=48&fontAlignY=35&desc=Software%20Engineer&descAlignY=58&descSize=18" width="100%" alt="Tom Klotz" />
 
 <a href="https://github.com/TomKlotzPro">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=1000&color=0055A4&center=true&vCenter=true&width=600&lines=Software+Engineer+%40+Photoroom;TypeScript+%2F+React+%2F+Next.js;Ex-Algolia+%C2%B7+Ex-CastorDoc+%C2%B7+Ministry+of+Army+%F0%9F%87%AB%F0%9F%87%B7" alt="Typing intro" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=1000&color=0055A4&center=true&vCenter=true&width=600&lines=Software+Engineer+%40+Photoroom;Raised+on+API+clients+%40+Algolia;3+years+%40+Minist%C3%A8re+des+Arm%C3%A9es+%F0%9F%87%AB%F0%9F%87%B7;TypeScript+%2F+React+%2F+Next.js" alt="Typing intro" />
 </a>
 
 <br/>
@@ -23,6 +23,7 @@ const tom = {
   role:      "Software Engineer",
   company:   "@Photoroom",
   location:  "Paris, France 🇫🇷",
+  roots:     "API clients @Algolia — trained beside open-source experts",
   formerly:  ["@Algolia", "@CastorDoc", "Ministry of Army 🇫🇷"],
   education: "Efrei — Engineering Degree (M.Sc.), Computer Science, 2020",
   stack:     ["TypeScript", "Java", "Python", "SQL", "React", "Next.js", "Node.js"],
@@ -31,6 +32,19 @@ const tom = {
   shipped:   "Custom Virtual Models · AI Video Gen · Shareable Links",
   motto:     "Honneur et code — ship fast to learn.",
 };
+```
+
+---
+
+### `> git log --reverse --oneline career/`
+
+```console
+* a190l1a  feat(algolia): cut my teeth on API clients, shoulder to shoulder
+|          with open-source experts — DX and polish became non-negotiable
+* ca570rd  feat(castordoc): product engineering on the modern data stack
+* a5m335f  feat(armées): serve France for 3 years 🎖️ — discipline,
+|          sang-froid, mission first
+* ph070r0  feat(photoroom): ship AI photo tools to millions  (HEAD -> main)
 ```
 
 ---
@@ -63,9 +77,23 @@ const tom = {
 
 ---
 
-### `> stats`
+### `> stats --live`
 
 <div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=TomKlotzPro&hide_border=true&background=00000000&ring=EF4135&fire=EF4135&currStreakLabel=6CA5E8&sideLabels=6CA5E8&currStreakNum=C9D1D9&sideNums=C9D1D9&dates=8B949E" />
+  <img src="https://streak-stats.demolab.com?user=TomKlotzPro&hide_border=true&background=00000000&ring=0055A4&fire=EF4135&currStreakLabel=0055A4&sideLabels=0055A4&currStreakNum=333333&sideNums=333333&dates=666666" height="165" alt="Contribution streak" />
+</picture>
+
+<br/>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-activity-graph.vercel.app/graph?username=TomKlotzPro&hide_border=true&bg_color=00000000&color=6CA5E8&line=EF4135&point=FFFFFF&area=true&area_color=EF4135" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=TomKlotzPro&hide_border=true&bg_color=00000000&color=0055A4&line=EF4135&point=0055A4&area=true&area_color=EF4135" width="100%" alt="Contribution activity graph" />
+</picture>
+
+<br/><br/>
 
 <img src="https://img.shields.io/badge/Contributions_%40_Photoroom-786-0055A4?style=for-the-badge&logo=github&logoColor=white&labelColor=EF4135" alt="786 contributions at Photoroom" />
 
