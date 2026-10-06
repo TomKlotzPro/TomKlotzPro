@@ -1,17 +1,16 @@
-<svg width="297" height="184" viewBox="0 0 297 184" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Connect — GitHub: @TomKlotzPro">
-  <style>
-    text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
-    .mono { font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace; }
-  </style>
-  <rect x="-33" width="330" height="184" rx="18" fill="#0B0E14"/>
-  <rect x="-32.5" y="0.5" width="329" height="183" rx="17.5" stroke="#FFFFFF" stroke-opacity="0.08"/>
-
-  <rect x="9.5" y="70.5" width="239" height="87" rx="13.5" fill="#10141D" stroke="#FFFFFF" stroke-opacity="0.07"/>
-  <rect x="29" y="99" width="30" height="30" rx="7" fill="#1B2028" stroke="#FFFFFF" stroke-opacity="0.12"/>
-  <g transform="translate(33 103) scale(0.916)">
-    <path fill="#E6EAF2" fill-rule="evenodd" clip-rule="evenodd" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+<svg width="333" height="112" viewBox="0 0 333 112" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pixelheim: my retro pixel-art RPG">
+  <defs><clipPath id="panel"><rect x="-667" width="1000" height="112" rx="20"/></clipPath></defs>
+  <style>text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; } .mono { font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Cascadia Code', Consolas, 'Liberation Mono', monospace; }</style>
+  <g clip-path="url(#panel)">
+    <rect x="-667" width="1000" height="112" fill="#0B0E14"/>
+    <rect x="-667" y="109" width="1000" height="3" fill="url(#tricolore)"/>
   </g>
-  <text x="71" y="112" font-size="14.5" font-weight="600" fill="#E8ECF4">GitHub</text>
-  <text x="71" y="130" class="mono" font-size="11" fill="#5F6B84">@TomKlotzPro</text>
-  <text x="227" y="119" text-anchor="end" class="mono" font-size="14" fill="#5F6B84">↗</text>
+  <defs><linearGradient id="tricolore" x1="-667" y1="0" x2="333" y2="0" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#2A63F6"/><stop offset="0.5" stop-color="#F5F7FA"/><stop offset="1" stop-color="#E5484D"/>
+  </linearGradient></defs>
+  <rect x="10" y="20" width="303" height="70" rx="14" fill="#10141D" stroke="#1E2533"/>
+  <rect x="26" y="35" width="40" height="40" rx="10" fill="#1B2130"/><rect x="56.5" y="41.0" width="3.5" height="3.5" fill="#E8ECF4"/><rect x="53.0" y="44.5" width="3.5" height="3.5" fill="#E8ECF4"/><rect x="49.5" y="48.0" width="3.5" height="3.5" fill="#E8ECF4"/><rect x="46.0" y="51.5" width="3.5" height="3.5" fill="#E8ECF4"/><rect x="35.5" y="51.5" width="3.5" height="3.5" fill="#C9A227"/><rect x="39.0" y="55.0" width="3.5" height="3.5" fill="#C9A227"/><rect x="42.5" y="55.0" width="3.5" height="3.5" fill="#E8ECF4"/><rect x="39.0" y="58.5" width="3.5" height="3.5" fill="#B07A3B"/><rect x="42.5" y="58.5" width="3.5" height="3.5" fill="#C9A227"/><rect x="35.5" y="62.0" width="3.5" height="3.5" fill="#B07A3B"/><rect x="46.0" y="62.0" width="3.5" height="3.5" fill="#C9A227"/><rect x="32.0" y="65.5" width="3.5" height="3.5" fill="#B07A3B"/>
+  <text x="80" y="51" font-size="17" font-weight="700" fill="#E8ECF4">Pixelheim</text>
+  <text x="80" y="72" class="mono" font-size="13" fill="#8C96AA">my retro pixel-art RPG</text>
+  <text x="295" y="61" text-anchor="end" font-size="18" fill="#6E7A92">↗</text>
 </svg>
