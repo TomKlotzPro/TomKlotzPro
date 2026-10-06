@@ -29,12 +29,15 @@ CAREER = [
     ("a190l1a", "Algolia", "Search engine", "software engineering", "#3E63DD", "A"),
     ("ca570rd", "CastorDoc", "Data catalog", "fullstack engineering", "#FF7847", "C"),
     ("a5m335f", "Ministère des Armées", "Defense, 3 years of service", "software engineering", "#C9A227", "*"),
-    (None, "Photoroom", "AI photo editing", "software engineering, now", "#8B6CFF", "P"),
+    (None, "Photoroom", "AI photo editing", "software engineering, since 2026", "#8B6CFF", "P"),
 ]
+# Photoroom since Feb 16, 2026. Counts from `gh search prs --owner Photoroom --author @me --merged`
+# and `--reviewed-by @me` (2026-10-06); Code Connect coverage from the July 31 audit (367/385).
 CHANGELOG = [
     [("Rookie of the Year", "#FFFFFF", 700), (" at Photoroom, in my first 4.5 months", None, 400)],
-    [("350+", "#FFFFFF", 700), (" pull requests merged, and counting", None, 400)],
-    [("Shipped ", None, 400), ("Virtual Models, AI Video Gen, Share Links", "#FFFFFF", 700), (", the design system", None, 400)],
+    [("570+", "#FFFFFF", 700), (" pull requests merged and ", None, 400), ("540+", "#FFFFFF", 700), (" reviewed, in 8 months", None, 400)],
+    [("Shipped ", None, 400), ("Virtual Models, AI Video Gen, Share Links, Recommended edits", "#FFFFFF", 700)],
+    [("Design system: Code Connect coverage from ", None, 400), ("22% to 95%", "#FFFFFF", 700)],
 ]
 
 # ── Palette ──────────────────────────────────────────────────────────────────
@@ -52,7 +55,11 @@ FRANCE_RED = "#E5484D"
 VIOLET = "#8B6CFF"
 GREEN = "#3FB950"
 
-W, H = 1000, 1230
+W = 1000
+CHANGELOG_Y = 880
+CHANGELOG_H = 60 + 42 * len(CHANGELOG)
+FOOTER_Y = CHANGELOG_Y + CHANGELOG_H + 74
+H = FOOTER_Y + 90
 SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Cascadia Code', Consolas, 'Liberation Mono', monospace"
 
@@ -238,7 +245,7 @@ def career() -> str:
 
 
 def changelog() -> str:
-    y0 = 880
+    y0 = CHANGELOG_Y
     rows = []
     # Wide enough for Safari's SF Mono, the widest of the fallbacks.
     char_width = 10.6
@@ -270,7 +277,7 @@ def changelog() -> str:
     return f"""
   <!-- Highlights, typed into a changelog (clips start at 0.01: Safari ignores an empty clip) -->
   <g transform="translate(56 {y0})">
-    <rect width="888" height="186" rx="16" fill="{PANEL}" stroke="{LINE}"/>
+    <rect width="888" height="{CHANGELOG_H}" rx="16" fill="{PANEL}" stroke="{LINE}"/>
     <path d="M0 16 a16 16 0 0 1 16 -16 h128 v36 h-144 z" fill="#161B26"/>
     <text x="22" y="24" class="mono" font-size="14" fill="{SUB}">CHANGELOG.md</text>
     <line x1="0" y1="36" x2="888" y2="36" stroke="{LINE}"/>
@@ -284,7 +291,7 @@ def changelog() -> str:
 
 
 def footer() -> str:
-    y = 1140
+    y = FOOTER_Y
     return f"""
   <!-- Sign-off -->
   <line x1="56" y1="{y - 46}" x2="944" y2="{y - 46}" stroke="{LINE}"/>
@@ -297,7 +304,7 @@ def footer() -> str:
 
 
 def build() -> str:
-    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. An animation removes the background from his portrait, then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 350+ pull requests merged, shipped Virtual Models, AI Video Gen, Share Links and the design system.">
+    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. An animation removes the background from his portrait, then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
   <defs>
     <clipPath id="panel"><rect width="{W}" height="{H}" rx="24"/></clipPath>
     <clipPath id="canvasClip"><rect x="{CANVAS_X}" y="{CANVAS_Y}" width="{CANVAS}" height="{CANVAS}" rx="18"/></clipPath>
@@ -355,10 +362,11 @@ def build() -> str:
 
 # ── Links: one panel cut in three images, since each needs its own <a> in the README ──
 
+# New file names on purpose: GitHub kept serving the old connect-*.svg slices at the new widths.
 LINKS = [
-    ("connect-left.svg", "LinkedIn", "tom-klotz", "linkedin"),
-    ("connect-mid.svg", "Photoroom", "photoroom.com", "photoroom"),
-    ("connect-right.svg", "Pixelheim", "my retro pixel-art RPG", "pixelheim"),
+    ("link-linkedin.svg", "LinkedIn", "tom-klotz", "linkedin"),
+    ("link-photoroom.svg", "Photoroom", "photoroom.com", "photoroom"),
+    ("link-pixelheim.svg", "Pixelheim", "my retro pixel-art RPG", "pixelheim"),
 ]
 LINK_WIDTHS = [333, 334, 333]
 LINK_HEIGHT = 112
