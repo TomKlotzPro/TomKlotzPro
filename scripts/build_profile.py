@@ -2,8 +2,11 @@
 """Builds assets/profile.svg, the animated card at the top of the profile README.
 
 Edit the facts below, then run:  python3 scripts/build_profile.py
-The portrait cutout comes from scripts/cutout.swift (macOS Vision, runs locally):
-  swift scripts/cutout.swift scripts/source/portrait.png scripts/source/portrait-cutout.png
+
+Sources in scripts/source are square crops of the same photo, so the subject lines up from frame to frame:
+  portrait.jpg              the original photo
+  portrait-cutout.png       its cutout, from scripts/cutout.swift (macOS Vision, runs locally)
+  backgrounds/*.jpg         real AI backgrounds, generated in the Photoroom app on that photo
 """
 
 import base64
@@ -63,9 +66,18 @@ H = FOOTER_Y + 90
 SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Cascadia Code', Consolas, 'Liberation Mono', monospace"
 
-# Hero loop: original photo, background removal sweep, then AI backgrounds, in 12 s.
-LOOP = 12.0
+# Hero loop: original photo, background removal sweep, then each AI background, then back to the original.
+LOOP = 13.0
+SWEEP_START, SWEEP_END, REMOVED_END = 1.0, 3.0, 4.5
+AI_BACKGROUNDS = [
+    # file, caption, shown from (s)
+    ("space.jpg", "AI background: outer space", REMOVED_END),
+    ("paris.jpg", "AI background: Paris at dusk", 8.5),
+]
+RESET = 12.2
 CANVAS_X, CANVAS_Y, CANVAS = 576, 92, 368
+# Twice the canvas size, for sharp rendering on high density screens.
+EMBED = CANVAS * 2
 
 
 def data_uri(image: Image.Image, fmt: str, **options) -> str:
@@ -99,14 +111,19 @@ def prompt(x: float, y: float, command: str) -> str:
     )
 
 
+def embedded(name: str) -> str:
+    image = Image.open(SOURCE / name).resize((EMBED, EMBED), Image.LANCZOS)
+    if image.mode == "RGBA":
+        return data_uri(image, "WEBP", quality=88, method=6)
+    return data_uri(image.convert("RGB"), "JPEG", quality=82, optimize=True, progressive=True)
+
+
 def hero() -> str:
-    portrait = Image.open(SOURCE / "portrait.png").convert("RGB")
-    cutout = Image.open(SOURCE / "portrait-cutout.png").convert("RGBA")
-    original_uri = data_uri(portrait, "JPEG", quality=88)
-    cutout_uri = data_uri(cutout, "WEBP", quality=90, method=6)
+    original_uri = embedded("portrait.jpg")
+    cutout_uri = embedded("portrait-cutout.png")
     x, y, s = CANVAS_X, CANVAS_Y, CANVAS
     end = x + s
-    sweep = key_times(0, 1, 3, LOOP)
+    sweep = key_times(0, SWEEP_START, SWEEP_END, LOOP)
     spline = 'calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1"'
 
     def fade_in(start: float) -> str:
@@ -118,7 +135,7 @@ def hero() -> str:
     def caption(text: str, start: float, stop: float, accent: str = SUB) -> str:
         shown = f'values="0;1;0" keyTimes="{key_times(0, start, stop)}"'
         if start == 0:
-            shown = f'values="1;0;1" keyTimes="{key_times(0, stop, 11)}"'
+            shown = f'values="1;0;1" keyTimes="{key_times(0, stop, RESET)}"'
         return (
             f'<text x="{x + 64}" y="{y + s + 45}" font-size="15" fill="{accent}" opacity="{1 if start == 0 else 0}">'
             f'{esc(text)}<animate attributeName="opacity" {shown} calcMode="discrete" dur="{LOOP}s" '
@@ -128,6 +145,14 @@ def hero() -> str:
     name_lines = "".join(
         f'<text x="56" y="{298 + i * 30}" font-size="20" fill="{SUB}">{esc(line)}</text>'
         for i, line in enumerate(PITCH)
+    )
+    backgrounds = "".join(
+        f'<image href="{embedded("backgrounds/" + file)}" x="{x}" y="{y}" width="{s}" height="{s}" opacity="0">{fade_in(start)}</image>'
+        for file, _, start in AI_BACKGROUNDS
+    )
+    stops = [start for _, _, start in AI_BACKGROUNDS[1:]] + [RESET]
+    ai_captions = "".join(
+        caption(text, start, stop, TEXT) for (_, text, start), stop in zip(AI_BACKGROUNDS, stops)
     )
     before_lines = "".join(
         f'<text x="56" y="{384 + i * 26}" font-size="17" fill="{MUTED}">{esc(line)}</text>'
@@ -148,15 +173,13 @@ def hero() -> str:
   <g clip-path="url(#canvasClip)">
     <image href="{original_uri}" x="{x}" y="{y}" width="{s}" height="{s}" preserveAspectRatio="xMidYMid slice"/>
     <g clip-path="url(#sweepClip)">
-      <animate attributeName="opacity" values="1;1;0;0" keyTimes="{key_times(0, 11, 11.7, LOOP)}" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0;0" keyTimes="{key_times(0, RESET, RESET + 0.6, LOOP)}" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
       <rect x="{x}" y="{y}" width="{s}" height="{s}" fill="url(#checker)"/>
-      <rect x="{x}" y="{y}" width="{s}" height="{s}" fill="url(#studio)" opacity="0">{fade_in(4.5)}</rect>
-      <rect x="{x}" y="{y}" width="{s}" height="{s}" fill="url(#white)" opacity="0">{fade_in(7)}</rect>
-      <rect x="{x}" y="{y}" width="{s}" height="{s}" fill="url(#dusk)" opacity="0">{fade_in(9)}</rect>
-      <image href="{cutout_uri}" x="{x}" y="{y}" width="{s}" height="{s}" preserveAspectRatio="xMidYMid slice"/>
+      <image href="{cutout_uri}" x="{x}" y="{y}" width="{s}" height="{s}"/>
+      {backgrounds}
     </g>
     <g opacity="0">
-      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="{key_times(0, 1, 2.9, 3.1, LOOP)}" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="{key_times(0, SWEEP_START, SWEEP_END - 0.1, SWEEP_END + 0.1, LOOP)}" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
       <rect y="{y}" width="40" height="{s}" fill="url(#scanGlow)">
         <animate attributeName="x" values="{x - 40};{x - 40};{end - 40};{end - 40}" keyTimes="{sweep}" {spline} dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
       </rect>
@@ -171,12 +194,10 @@ def hero() -> str:
   <g transform="translate({x + 38} {y + s + 39})">
     <path class="spark" d="M0 -10 C1.2 -3 3 -1.2 10 0 C3 1.2 1.2 3 0 10 C-1.2 3 -3 1.2 -10 0 C-3 -1.2 -1.2 -3 0 -10 Z" fill="{VIOLET}"/>
   </g>
-  {caption("Original photo", 0, 1)}
-  {caption("Removing the background…", 1, 3, TEXT)}
-  {caption("Background removed", 3, 4.5, TEXT)}
-  {caption("AI background: studio", 4.5, 7, TEXT)}
-  {caption("AI background: clean white", 7, 9, TEXT)}
-  {caption("AI background: Paris at dusk", 9, 11, TEXT)}
+  {caption("Original photo", 0, SWEEP_START)}
+  {caption("Removing the background…", SWEEP_START, SWEEP_END, TEXT)}
+  {caption("Background removed", SWEEP_END, REMOVED_END, TEXT)}
+  {ai_captions}
 """
 
 
@@ -304,25 +325,16 @@ def footer() -> str:
 
 
 def build() -> str:
-    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. An animation removes the background from his portrait, then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
+    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. An animation removes the background from his portrait and swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
   <defs>
     <clipPath id="panel"><rect width="{W}" height="{H}" rx="24"/></clipPath>
     <clipPath id="canvasClip"><rect x="{CANVAS_X}" y="{CANVAS_Y}" width="{CANVAS}" height="{CANVAS}" rx="18"/></clipPath>
     <clipPath id="sweepClip"><rect x="{CANVAS_X}" y="{CANVAS_Y}" height="{CANVAS}" width="0.01">
-      <animate attributeName="width" values="0.01;0.01;{CANVAS};{CANVAS}" keyTimes="{key_times(0, 1, 3, LOOP)}" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="0.01;0.01;{CANVAS};{CANVAS}" keyTimes="{key_times(0, SWEEP_START, SWEEP_END, LOOP)}" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
     </rect></clipPath>
     <pattern id="checker" width="24" height="24" patternUnits="userSpaceOnUse" x="{CANVAS_X}" y="{CANVAS_Y}">
       <rect width="24" height="24" fill="#1B2130"/><rect width="12" height="12" fill="#262E40"/><rect x="12" y="12" width="12" height="12" fill="#262E40"/>
     </pattern>
-    <radialGradient id="studio" cx="0.62" cy="0.55" r="0.75">
-      <stop offset="0" stop-color="#B9A6FF"/><stop offset="0.45" stop-color="#7A5CF0"/><stop offset="1" stop-color="#2A1C6B"/>
-    </radialGradient>
-    <linearGradient id="white" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FAFAFC"/><stop offset="1" stop-color="#D9DDE6"/>
-    </linearGradient>
-    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#22306E"/><stop offset="0.55" stop-color="#C77B8B"/><stop offset="1" stop-color="#F3B57E"/>
-    </linearGradient>
     <linearGradient id="scanGlow" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="{VIOLET}" stop-opacity="0"/><stop offset="1" stop-color="{VIOLET}" stop-opacity="0.75"/>
     </linearGradient>
