@@ -7,13 +7,15 @@ Sources in scripts/source are square crops of the same photo, so the subject lin
   portrait.jpg              the original photo
   portrait-cutout.png       its cutout, from scripts/cutout.swift (macOS Vision, runs locally)
   backgrounds/*.jpg         real AI backgrounds, generated in the Photoroom app on that photo
+  name.svg                  the name as outlines, from scripts/outline_name.py
 """
 
 import base64
 import io
+import re
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "scripts" / "source"
@@ -21,12 +23,10 @@ OUT = ROOT / "assets" / "profile.svg"
 
 # ── Facts ────────────────────────────────────────────────────────────────────
 
-NAME = "Tom Klotz"
 PITCH = [
     "I ship features in Photoroom's AI photo editor,",
     "used by millions to make their photos shine.",
 ]
-BEFORE = ["Before that: search at Algolia, data at CastorDoc,", "and three years serving France."]
 CAREER = [
     # hash, company, what, role, accent, glyph
     ("a190l1a", "Algolia", "Search engine", "software engineering", "#3E63DD", "A"),
@@ -59,7 +59,11 @@ VIOLET = "#8B6CFF"
 GREEN = "#3FB950"
 
 W = 1000
-CHANGELOG_Y = 880
+RED_GLOW_LIFT = 40
+# The README top-aligns the card (align="top") so GitHub leaves no line-box gap between it and the links.
+SEAM = 0
+CAREER_Y = 728
+CHANGELOG_Y = CAREER_Y + 320
 CHANGELOG_H = 60 + 42 * len(CHANGELOG)
 FOOTER_Y = CHANGELOG_Y + CHANGELOG_H + 74
 H = FOOTER_Y + 90
@@ -75,9 +79,13 @@ AI_BACKGROUNDS = [
     ("paris.jpg", "AI background: Paris at dusk", 8.5),
 ]
 RESET = 12.2
-CANVAS_X, CANVAS_Y, CANVAS = 576, 92, 368
-# Twice the canvas size, for sharp rendering on high density screens.
-EMBED = CANVAS * 2
+# The hero is a magazine cover: the name sits between the background and the cutout, so once the background
+# is gone Tom stands in front of it. The banner shows a band of the square photos, from WINDOW_TOP down.
+BANNER_X, BANNER_Y, BANNER_W, BANNER_H = 56, 92, 888, 480
+WINDOW_TOP = 0.26
+NAME_X, NAME_W = 84, 832
+# On the square photo his hair starts at 0.43, so the head covers the bottom third of the letters it crosses.
+NAME_BASELINE = BANNER_Y + (0.47 - WINDOW_TOP) * BANNER_W
 
 
 def data_uri(image: Image.Image, fmt: str, **options) -> str:
@@ -112,19 +120,39 @@ def prompt(x: float, y: float, command: str) -> str:
 
 
 def embedded(name: str) -> str:
-    image = Image.open(SOURCE / name).resize((EMBED, EMBED), Image.LANCZOS)
+    image = Image.open(SOURCE / name)
+    side = image.width
+    top = round(WINDOW_TOP * side)
+    image = image.crop((0, top, side, top + round(side * BANNER_H / BANNER_W)))
     if image.mode == "RGBA":
+        # Shrink the matte by a pixel: its outer edge still carries the sunset sky as a pale halo.
+        image.putalpha(image.getchannel("A").filter(ImageFilter.MinFilter(3)))
         return data_uri(image, "WEBP", quality=88, method=6)
     return data_uri(image.convert("RGB"), "JPEG", quality=82, optimize=True, progressive=True)
+
+
+def masthead() -> str:
+    view_box, path = re.search(r'viewBox="([^"]+)".*? d="([^"]+)"', (SOURCE / "name.svg").read_text()).groups()
+    left = float(view_box.split()[0])
+    scale = NAME_W / float(view_box.split()[2])
+    return (
+        f'<path transform="translate({NAME_X - left * scale:.1f} {NAME_BASELINE:.1f}) scale({scale:.5f})" '
+        f'd="{path}" fill="#F5F7FA"/>'
+    )
 
 
 def hero() -> str:
     original_uri = embedded("portrait.jpg")
     cutout_uri = embedded("portrait-cutout.png")
-    x, y, s = CANVAS_X, CANVAS_Y, CANVAS
-    end = x + s
+    x, y, w, h = BANNER_X, BANNER_Y, BANNER_W, BANNER_H
+    end = x + w
     sweep = key_times(0, SWEEP_START, SWEEP_END, LOOP)
     spline = 'calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1"'
+    chip_y = y + h - 58
+    reset = (
+        f'<animate attributeName="opacity" values="1;1;0;0" keyTimes="{key_times(0, RESET, RESET + 0.6, LOOP)}" '
+        f'dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>'
+    )
 
     def fade_in(start: float) -> str:
         return (
@@ -137,72 +165,70 @@ def hero() -> str:
         if start == 0:
             shown = f'values="1;0;1" keyTimes="{key_times(0, stop, RESET)}"'
         return (
-            f'<text x="{x + 64}" y="{y + s + 45}" font-size="15" fill="{accent}" opacity="{1 if start == 0 else 0}">'
+            f'<text x="{x + 62}" y="{chip_y + 27}" font-size="15" fill="{accent}" opacity="{1 if start == 0 else 0}">'
             f'{esc(text)}<animate attributeName="opacity" {shown} calcMode="discrete" dur="{LOOP}s" '
             f'begin="0.5s" repeatCount="indefinite"/></text>'
         )
 
-    name_lines = "".join(
-        f'<text x="56" y="{298 + i * 30}" font-size="20" fill="{SUB}">{esc(line)}</text>'
+    pitch_lines = "".join(
+        f'<text x="56" y="{y + h + 88 + i * 28}" font-size="19" fill="{SUB}">{esc(line)}</text>'
         for i, line in enumerate(PITCH)
     )
     backgrounds = "".join(
-        f'<image href="{embedded("backgrounds/" + file)}" x="{x}" y="{y}" width="{s}" height="{s}" opacity="0">{fade_in(start)}</image>'
+        f'<image href="{embedded("backgrounds/" + file)}" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="none" opacity="0">{fade_in(start)}</image>'
         for file, _, start in AI_BACKGROUNDS
     )
     stops = [start for _, _, start in AI_BACKGROUNDS[1:]] + [RESET]
     ai_captions = "".join(
         caption(text, start, stop, TEXT) for (_, text, start), stop in zip(AI_BACKGROUNDS, stops)
     )
-    before_lines = "".join(
-        f'<text x="56" y="{384 + i * 26}" font-size="17" fill="{MUTED}">{esc(line)}</text>'
-        for i, line in enumerate(BEFORE)
-    )
     return f"""
-  <!-- Hero: the Photoroom trick, played on the author's own portrait -->
-  {prompt(56, 96, "whoami")}
-  <rect class="cursor" x="147" y="83" width="9" height="16" fill="{BLUE}"/>
-  <text x="50" y="192" font-size="86" font-weight="800" letter-spacing="-2.5" fill="url(#nameGrad)">{NAME}</text>
-  <text x="56" y="238" font-size="24" fill="{TEXT}">Software engineer at <tspan fill="{VIOLET}" font-weight="700">Photoroom</tspan></text>
-  {name_lines}
-  {before_lines}
-  {flag(56, 446)}
-  <text x="88" y="459" font-size="16" fill="{MUTED}">Paris, France</text>
-
-  <text x="{x}" y="{y - 16}" class="mono" font-size="13" fill="{FAINT}">tom.jpg</text>
-  <g clip-path="url(#canvasClip)">
-    <image href="{original_uri}" x="{x}" y="{y}" width="{s}" height="{s}" preserveAspectRatio="xMidYMid slice"/>
-    <g clip-path="url(#sweepClip)">
-      <animate attributeName="opacity" values="1;1;0;0" keyTimes="{key_times(0, RESET, RESET + 0.6, LOOP)}" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
-      <rect x="{x}" y="{y}" width="{s}" height="{s}" fill="url(#checker)"/>
-      <image href="{cutout_uri}" x="{x}" y="{y}" width="{s}" height="{s}"/>
+  <!-- Hero: the Photoroom trick, played on the author's own portrait. Layers, bottom to top: the photo,
+       the swept-in background, the name, the swept-in cutout. -->
+  {prompt(56, 66, "whoami")}
+  <rect class="cursor" x="147" y="53" width="9" height="16" fill="{BLUE}"/>
+  <text x="{end}" y="66" text-anchor="end" class="mono" font-size="13" fill="{FAINT}">tom.jpg</text>
+  <g clip-path="url(#bannerClip)">
+    <image href="{original_uri}" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="none"/>
+    <g clip-path="url(#sweepClip)">{reset}
+      <rect x="{x}" y="{y}" width="{w}" height="{h}" fill="url(#checker)"/>
       {backgrounds}
+    </g>
+    <rect x="{x}" y="{y}" width="{w}" height="{h}" fill="url(#scrim)"/>
+    {masthead()}
+    <g clip-path="url(#sweepClip)">{reset}
+      <image href="{cutout_uri}" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="none" filter="url(#lift)"/>
     </g>
     <g opacity="0">
       <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="{key_times(0, SWEEP_START, SWEEP_END - 0.1, SWEEP_END + 0.1, LOOP)}" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
-      <rect y="{y}" width="40" height="{s}" fill="url(#scanGlow)">
+      <rect y="{y}" width="40" height="{h}" fill="url(#scanGlow)">
         <animate attributeName="x" values="{x - 40};{x - 40};{end - 40};{end - 40}" keyTimes="{sweep}" {spline} dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
       </rect>
-      <rect y="{y}" width="2" height="{s}" fill="#FFFFFF">
+      <rect y="{y}" width="2" height="{h}" fill="#FFFFFF">
         <animate attributeName="x" values="{x - 1};{x - 1};{end - 1};{end - 1}" keyTimes="{sweep}" {spline} dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
       </rect>
     </g>
   </g>
-  <rect x="{x}" y="{y}" width="{s}" height="{s}" rx="18" stroke="#2A3242" stroke-width="1.5"/>
+  <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" stroke="#2A3242" stroke-width="1.5"/>
 
-  <rect x="{x}" y="{y + s + 18}" width="{s}" height="42" rx="21" fill="{PANEL}" stroke="{LINE}"/>
-  <g transform="translate({x + 38} {y + s + 39})">
+  <rect x="{x + 16}" y="{chip_y}" width="300" height="42" rx="21" fill="{INK}" fill-opacity="0.82" stroke="{LINE}"/>
+  <g transform="translate({x + 38} {chip_y + 21})">
     <path class="spark" d="M0 -10 C1.2 -3 3 -1.2 10 0 C3 1.2 1.2 3 0 10 C-1.2 3 -3 1.2 -10 0 C-3 -1.2 -1.2 -3 0 -10 Z" fill="{VIOLET}"/>
   </g>
   {caption("Original photo", 0, SWEEP_START)}
   {caption("Removing the background…", SWEEP_START, SWEEP_END, TEXT)}
   {caption("Background removed", SWEEP_END, REMOVED_END, TEXT)}
   {ai_captions}
+
+  <text x="56" y="{y + h + 52}" font-size="26" fill="{TEXT}">Software engineer at <tspan fill="{VIOLET}" font-weight="700">Photoroom</tspan></text>
+  {pitch_lines}
+  {flag(920, y + h + 38)}
+  <text x="908" y="{y + h + 52}" text-anchor="end" font-size="17" fill="{MUTED}">Paris, France</text>
 """
 
 
 def career() -> str:
-    y0 = 560
+    y0 = CAREER_Y
     line_y = y0 + 150
     xs = [160, 380, 600, 820]
     length = 940 - 96
@@ -325,14 +351,14 @@ def footer() -> str:
 
 
 def build() -> str:
-    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. An animation removes the background from his portrait and swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
+    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
   <defs>
-    <clipPath id="panel"><rect width="{W}" height="{H}" rx="24"/></clipPath>
-    <clipPath id="canvasClip"><rect x="{CANVAS_X}" y="{CANVAS_Y}" width="{CANVAS}" height="{CANVAS}" rx="18"/></clipPath>
-    <clipPath id="sweepClip"><rect x="{CANVAS_X}" y="{CANVAS_Y}" height="{CANVAS}" width="0.01">
-      <animate attributeName="width" values="0.01;0.01;{CANVAS};{CANVAS}" keyTimes="{key_times(0, SWEEP_START, SWEEP_END, LOOP)}" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
+    <clipPath id="panel"><rect width="{W}" height="{H + 24}" rx="24"/></clipPath>
+    <clipPath id="bannerClip"><rect x="{BANNER_X}" y="{BANNER_Y}" width="{BANNER_W}" height="{BANNER_H}" rx="18"/></clipPath>
+    <clipPath id="sweepClip"><rect x="{BANNER_X}" y="{BANNER_Y}" height="{BANNER_H}" width="0.01">
+      <animate attributeName="width" values="0.01;0.01;{BANNER_W};{BANNER_W}" keyTimes="{key_times(0, SWEEP_START, SWEEP_END, LOOP)}" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
     </rect></clipPath>
-    <pattern id="checker" width="24" height="24" patternUnits="userSpaceOnUse" x="{CANVAS_X}" y="{CANVAS_Y}">
+    <pattern id="checker" width="24" height="24" patternUnits="userSpaceOnUse" x="{BANNER_X}" y="{BANNER_Y}">
       <rect width="24" height="24" fill="#1B2130"/><rect width="12" height="12" fill="#262E40"/><rect x="12" y="12" width="12" height="12" fill="#262E40"/>
     </pattern>
     <linearGradient id="scanGlow" x1="0" y1="0" x2="1" y2="0">
@@ -341,10 +367,10 @@ def build() -> str:
     <linearGradient id="tricolore" x1="0" y1="0" x2="{W}" y2="0" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="{FRANCE_BLUE}"/><stop offset="0.5" stop-color="#F5F7FA"/><stop offset="1" stop-color="{FRANCE_RED}"/>
     </linearGradient>
-    <linearGradient id="nameGrad" x1="0" y1="0" x2="1" y2="0.5">
-      <stop offset="0" stop-color="#F7F9FF"/><stop offset="1" stop-color="#AFC4FF"/>
+    <linearGradient id="scrim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="{INK}" stop-opacity="0.55"/><stop offset="0.55" stop-color="{INK}" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="blueGlow"><stop offset="0" stop-color="{FRANCE_BLUE}" stop-opacity="0.26"/><stop offset="1" stop-color="{FRANCE_BLUE}" stop-opacity="0"/></radialGradient>
+    <filter id="lift" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.45"/></filter>
     <radialGradient id="redGlow"><stop offset="0" stop-color="{FRANCE_RED}" stop-opacity="0.12"/><stop offset="1" stop-color="{FRANCE_RED}" stop-opacity="0"/></radialGradient>
     <radialGradient id="violetGlow"><stop offset="0" stop-color="{VIOLET}" stop-opacity="0.16"/><stop offset="1" stop-color="{VIOLET}" stop-opacity="0"/></radialGradient>
   </defs>
@@ -359,10 +385,8 @@ def build() -> str:
   </style>
   <g clip-path="url(#panel)">
     <rect width="{W}" height="{H}" fill="{INK}"/>
-    <circle cx="{CANVAS_X + CANVAS / 2}" cy="{CANVAS_Y + CANVAS / 2}" r="330" fill="url(#blueGlow)"/>
-    <circle cx="90" cy="{H - 40}" r="300" fill="url(#redGlow)"/>
+    <circle cx="90" cy="{H - RED_GLOW_LIFT}" r="300" fill="url(#redGlow)"/>
     <rect width="{W}" height="3" fill="url(#tricolore)"/>
-    <rect y="{H - 3}" width="{W}" height="3" fill="url(#tricolore)"/>
   </g>
 {hero()}
 {career()}
@@ -380,7 +404,10 @@ LINKS = [
     ("link-photoroom.svg", "Photoroom", "photoroom.com", "photoroom"),
     ("link-pixelheim.svg", "Pixelheim", "my retro pixel-art RPG", "pixelheim"),
 ]
-LINK_WIDTHS = [333, 334, 333]
+# The cards line up with the card's content column (x 56 to 944), so the slices are cut in the gaps between them.
+LINK_GAP = 20
+LINK_CARD_W = (W - 2 * 56 - 2 * LINK_GAP) / 3
+LINK_WIDTHS = [349, 302, 349]
 LINK_HEIGHT = 112
 
 SWORD = [
@@ -411,23 +438,25 @@ def link_slice(index: int) -> str:
     file_name, title, detail, kind = LINKS[index]
     width = LINK_WIDTHS[index]
     offset = sum(LINK_WIDTHS[:index])
-    card_x = 20 if index == 0 else 10
-    card_w = width - card_x - (20 if index == len(LINKS) - 1 else 10)
+    card_w = LINK_CARD_W
+    card_x = round(56 + index * (LINK_CARD_W + LINK_GAP) - offset, 2)
     return f"""<svg width="{width}" height="{LINK_HEIGHT}" viewBox="0 0 {width} {LINK_HEIGHT}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{title}: {detail}">
-  <defs><clipPath id="panel"><rect x="{-offset}" width="{W}" height="{LINK_HEIGHT}" rx="20"/></clipPath></defs>
+  <defs><clipPath id="panel"><rect x="{-offset}" y="-20" width="{W}" height="{LINK_HEIGHT + 20}" rx="20"/></clipPath></defs>
   <style>text {{ font-family: {SANS}; }} .mono {{ font-family: {MONO}; }}</style>
   <g clip-path="url(#panel)">
     <rect x="{-offset}" width="{W}" height="{LINK_HEIGHT}" fill="{INK}"/>
+    <circle cx="{90 - offset}" cy="{-RED_GLOW_LIFT - SEAM}" r="300" fill="url(#redGlow)"/>
     <rect x="{-offset}" y="{LINK_HEIGHT - 3}" width="{W}" height="3" fill="url(#tricolore)"/>
   </g>
   <defs><linearGradient id="tricolore" x1="{-offset}" y1="0" x2="{W - offset}" y2="0" gradientUnits="userSpaceOnUse">
     <stop offset="0" stop-color="{FRANCE_BLUE}"/><stop offset="0.5" stop-color="#F5F7FA"/><stop offset="1" stop-color="{FRANCE_RED}"/>
-  </linearGradient></defs>
+  </linearGradient>
+  <radialGradient id="redGlow"><stop offset="0" stop-color="{FRANCE_RED}" stop-opacity="0.12"/><stop offset="1" stop-color="{FRANCE_RED}" stop-opacity="0"/></radialGradient></defs>
   <rect x="{card_x}" y="20" width="{card_w}" height="70" rx="14" fill="{PANEL}" stroke="{LINE}"/>
   {link_icon(kind, card_x + 16, 35)}
   <text x="{card_x + 70}" y="51" font-size="17" font-weight="700" fill="{TEXT}">{esc(title)}</text>
   <text x="{card_x + 70}" y="72" class="mono" font-size="13" fill="{MUTED}">{esc(detail)}</text>
-  <text x="{card_x + card_w - 18}" y="61" text-anchor="end" font-size="18" fill="{FAINT}">↗</text>
+  <path d="M{card_x + card_w - 31} 50 l9 -9 m-7 0 h7 v7" stroke="{FAINT}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 """
 
