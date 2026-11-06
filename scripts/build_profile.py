@@ -28,11 +28,11 @@ PITCH = [
     "used by millions to make their photos shine.",
 ]
 CAREER = [
-    # hash, company, what, role, accent, glyph
-    ("a190l1a", "Algolia", "Search engine", "software engineering", "#3E63DD", "A"),
-    ("ca570rd", "CastorDoc", "Data catalog", "fullstack engineering", "#FF7847", "C"),
-    ("a5m335f", "Ministère des Armées", "Defense, 3 years of service", "software engineering", "#C9A227", "*"),
-    (None, "Photoroom", "AI photo editing", "software engineering, since 2026", "#8B6CFF", "P"),
+    # hash, company, what, role, node colour (one blue family, lighter toward the present, which is lime), glyph
+    ("a190l1a", "Algolia", "Search engine", "software engineering", "#6FA8EC", "A"),
+    ("ca570rd", "CastorDoc", "Data catalog", "fullstack engineering", "#A3CDF6", "C"),
+    ("a5m335f", "Ministère des Armées", "Defense, 3 years of service", "software engineering", "#D6E9FC", "*"),
+    (None, "Photoroom", "AI photo editing", "software engineering, since 2026", "#E0F354", "P"),
 ]
 # Photoroom since Feb 16, 2026. Counts from `gh search prs --owner Photoroom --author @me --merged`
 # and `--reviewed-by @me` (2026-10-06); Code Connect coverage from the July 31 audit (367/385).
@@ -43,23 +43,31 @@ CHANGELOG = [
     [("Design system: Code Connect coverage from ", None, 400), ("22% to 95%", "#FFFFFF", 700)],
 ]
 
-# ── Palette ──────────────────────────────────────────────────────────────────
+# ── Palette: a blueprint of the card, in sky blue and cloudy white with a lime touch ──
+# Every text holds 4.5:1 against what is behind it (3:1 for large text), a grid line under it included.
 
-INK = "#0B0E14"
-PANEL = "#10141D"
-LINE = "#1E2533"
-TEXT = "#E8ECF4"
-SUB = "#B4BDCE"
-MUTED = "#8C96AA"
-FAINT = "#6E7A92"
-BLUE = "#5B8CFF"
+SKY = "#0099FF"  # the light: behind the photo, under HEAD
+CLOUD = "#FDFDFE"  # type, grid and linework
+LIME = "#E0F354"  # the touch: terminal details and the present
+# Sky blue deepened for the ground: #0099FF itself holds small white text at only 3:1.
+GROUND_TOP, GROUND_BOTTOM = "#0852A8", "#095CBA"
+INK = GROUND_TOP
+PANEL = "#0754A8"
+LOG_PANEL, LOG_TAB = "#053F82", "#053C7A"
+LINE = "#3C82D2"
+TEXT = CLOUD
+SUB = "#EEF5FC"
+MUTED = "#E8F1FA"
+FAINT = "#E4EEF9"
+ACCENT = "#B5E3FF"  # "Photoroom" in the role line
+NAVY = "#05264D"  # glyphs on the light nodes, the photo's top scrim
+CHIP, HEAD_FILL = "#05305F", "#05376F"
+CHECKER = ("#0A4C99", "#0A58AE")  # the "transparent" squares, in blueprint blue
+BLUE = GREEN = LIME  # prompt, cursors, diff "+", exit 0
 FRANCE_BLUE = "#2A63F6"
 FRANCE_RED = "#E5484D"
-VIOLET = "#8B6CFF"
-GREEN = "#3FB950"
 
 W = 1000
-RED_GLOW_LIFT = 40
 # The README top-aligns the card (align="top") so GitHub leaves no line-box gap between it and the links.
 SEAM = 0
 CAREER_Y = 728
@@ -209,18 +217,18 @@ def hero() -> str:
       </rect>
     </g>
   </g>
-  <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" stroke="#2A3242" stroke-width="1.5"/>
+  <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" stroke="{CLOUD}" stroke-width="1.5"/>
 
-  <rect x="{x + 16}" y="{chip_y}" width="300" height="42" rx="21" fill="{INK}" fill-opacity="0.82" stroke="{LINE}"/>
+  <rect x="{x + 16}" y="{chip_y}" width="300" height="42" rx="21" fill="{CHIP}" fill-opacity="0.86" stroke="{LINE}"/>
   <g transform="translate({x + 38} {chip_y + 21})">
-    <path class="spark" d="M0 -10 C1.2 -3 3 -1.2 10 0 C3 1.2 1.2 3 0 10 C-1.2 3 -3 1.2 -10 0 C-3 -1.2 -1.2 -3 0 -10 Z" fill="{VIOLET}"/>
+    <path class="spark" d="M0 -10 C1.2 -3 3 -1.2 10 0 C3 1.2 1.2 3 0 10 C-1.2 3 -3 1.2 -10 0 C-3 -1.2 -1.2 -3 0 -10 Z" fill="{LIME}"/>
   </g>
   {caption("Original photo", 0, SWEEP_START)}
   {caption("Removing the background…", SWEEP_START, SWEEP_END, TEXT)}
   {caption("Background removed", SWEEP_END, REMOVED_END, TEXT)}
   {ai_captions}
 
-  <text x="56" y="{y + h + 52}" font-size="26" fill="{TEXT}">Software engineer at <tspan fill="{VIOLET}" font-weight="700">Photoroom</tspan></text>
+  <text x="56" y="{y + h + 52}" font-size="26" fill="{TEXT}">Software engineer at <tspan fill="{ACCENT}" font-weight="700">Photoroom</tspan></text>
   {pitch_lines}
   {flag(920, y + h + 38)}
   <text x="908" y="{y + h + 52}" text-anchor="end" font-size="17" fill="{MUTED}">Paris, France</text>
@@ -242,11 +250,10 @@ def career() -> str:
         if glyph == "*":
             mark = (
                 f'<path d="M{cx} {line_y - 8} l2.4 4.9 5.4 0.8 -3.9 3.8 0.9 5.4 -4.8 -2.5 -4.8 2.5 0.9 -5.4 '
-                f'-3.9 -3.8 5.4 -0.8 z" fill="#1D1608"/>'
+                f'-3.9 -3.8 5.4 -0.8 z" fill="{NAVY}"/>'
             )
         else:
-            dark = "#3A1503" if glyph == "C" else "#FFFFFF"
-            mark = f'<text x="{cx}" y="{line_y + 5}" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="{dark}">{glyph}</text>'
+            mark = f'<text x="{cx}" y="{line_y + 5}" text-anchor="middle" class="mono" font-size="15" font-weight="700" fill="{NAVY}">{glyph}</text>'
         label = (
             f'<text x="{cx}" y="{line_y - 48}" text-anchor="middle" class="mono" font-size="14" fill="{FAINT}">{sha}</text>'
             if sha
@@ -270,14 +277,17 @@ def career() -> str:
   <!-- Career: a git graph that draws itself, HEAD lands on Photoroom -->
   <line x1="56" y1="{y0}" x2="944" y2="{y0}" stroke="{LINE}"/>
   {prompt(56, y0 + 52, 'git log --reverse --graph <tspan fill="' + FAINT + '">career/</tspan>')}
-  <circle cx="{head_x}" cy="{line_y}" r="150" fill="url(#violetGlow)"/>
-  <line x1="96" y1="{line_y}" x2="940" y2="{line_y}" stroke="#2A3242" stroke-width="2" stroke-dasharray="{length}" stroke-dashoffset="{length}">
+  <circle cx="{head_x}" cy="{line_y}" r="150" fill="url(#skyGlow)"/>
+  <defs><linearGradient id="careerLine" x1="96" y1="0" x2="940" y2="0" gradientUnits="userSpaceOnUse">
+    {"".join(f'<stop offset="{(x - 96) / length:.3f}" stop-color="{accent}"/>' for x, (*_, accent, _) in zip(xs, CAREER))}<stop offset="1" stop-color="{LIME}"/>
+  </linearGradient></defs>
+  <line x1="96" y1="{line_y}" x2="940" y2="{line_y}" stroke="url(#careerLine)" stroke-width="2" stroke-dasharray="{length}" stroke-dashoffset="{length}">
     <animate attributeName="stroke-dashoffset" from="{length}" to="0" begin="{draw_begin}s" dur="{draw_dur}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
   </line>
-  <path d="M948 {line_y} l-11 -6 v12 z" fill="#2A3242" opacity="0">
+  <path d="M948 {line_y} l-11 -6 v12 z" fill="{LIME}" opacity="0">
     <animate attributeName="opacity" from="0" to="1" begin="{draw_begin + draw_dur:.2f}s" dur="0.3s" fill="freeze"/>
   </path>
-  <circle cx="{head_x}" cy="{line_y}" r="24" fill="none" stroke="{VIOLET}" stroke-width="2" opacity="0">
+  <circle cx="{head_x}" cy="{line_y}" r="24" fill="none" stroke="{LIME}" stroke-width="2" opacity="0">
     <animate attributeName="r" values="24;46" begin="{head_begin + 0.4:.2f}s" dur="2.2s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.7;0" begin="{head_begin + 0.4:.2f}s" dur="2.2s" repeatCount="indefinite"/>
   </circle>
@@ -285,8 +295,8 @@ def career() -> str:
   <g opacity="0">
     <animate attributeName="opacity" from="0" to="1" begin="{head_begin:.2f}s" dur="0.35s" fill="freeze"/>
     <animateTransform attributeName="transform" type="translate" values="0 -14;0 3;0 0" keyTimes="0;0.6;1" begin="{head_begin:.2f}s" dur="0.6s" fill="freeze"/>
-    <rect x="{head_x - 62}" y="{line_y - 72}" width="124" height="30" rx="15" fill="#1A1533" stroke="{VIOLET}"/>
-    <text x="{head_x}" y="{line_y - 52}" text-anchor="middle" class="mono" font-size="14" font-weight="700" fill="#D9CEFF">HEAD → main</text>
+    <rect x="{head_x - 62}" y="{line_y - 72}" width="124" height="30" rx="15" fill="{HEAD_FILL}" stroke="{LIME}"/>
+    <text x="{head_x}" y="{line_y - 52}" text-anchor="middle" class="mono" font-size="14" font-weight="700" fill="{LIME}">HEAD → main</text>
   </g>
 """
 
@@ -324,8 +334,8 @@ def changelog() -> str:
     return f"""
   <!-- Highlights, typed into a changelog (clips start at 0.01: Safari ignores an empty clip) -->
   <g transform="translate(56 {y0})">
-    <rect width="888" height="{CHANGELOG_H}" rx="16" fill="{PANEL}" stroke="{LINE}"/>
-    <path d="M0 16 a16 16 0 0 1 16 -16 h128 v36 h-144 z" fill="#161B26"/>
+    <rect width="888" height="{CHANGELOG_H}" rx="16" fill="{LOG_PANEL}" stroke="{LINE}"/>
+    <path d="M0 16 a16 16 0 0 1 16 -16 h128 v36 h-144 z" fill="{LOG_TAB}"/>
     <text x="22" y="24" class="mono" font-size="14" fill="{SUB}">CHANGELOG.md</text>
     <line x1="0" y1="36" x2="888" y2="36" stroke="{LINE}"/>
   </g>
@@ -350,6 +360,36 @@ def footer() -> str:
 """
 
 
+# Paris roofs along the bottom of the card, and the tower between the motto and the handle, as linework.
+SKYLINE = (
+    "M0 1440 V1414 h40 l10 -14 h60 l10 14 h20 v-22 h8 v22 h30 l12 -18 h70 l12 18 h24 v-10 h6 v10 h40 l14 -20 h84 l14 20 h30 v-16 h8 v16"
+    " h50 l10 -12 h56 l10 12 h20 v-24 h6 v24 h34 l12 -16 h70 l12 16 h30 l10 -12 h40 l10 12 h18 v-18 h8 v18 h42 l14 -20 h80 l14 20 h29 V1440"
+    " M694 1440 L718 1388 L723 1356 L726 1334 L728 1318 L730 1334 L733 1356 L738 1388 L762 1440"
+    " M703 1418 H753 M713 1392 H743 M720 1362 H736 M705 1418 L740 1392 M751 1418 L716 1392 M715 1392 L734 1362 M741 1392 L722 1362"
+    " M712 1440 Q728 1424 744 1440"
+)
+
+
+def ground_defs() -> str:
+    total = H + SEAM + LINK_HEIGHT
+    return (
+        f'<linearGradient id="ground" x1="0" y1="0" x2="0" y2="{total}" gradientUnits="userSpaceOnUse">'
+        f'<stop offset="0" stop-color="{GROUND_TOP}"/><stop offset="1" stop-color="{GROUND_BOTTOM}"/></linearGradient>'
+        '<pattern id="grid" width="120" height="120" patternUnits="userSpaceOnUse">'
+        f'<path d="M24 0V120M48 0V120M72 0V120M96 0V120M0 24H120M0 48H120M0 72H120M0 96H120" stroke="{CLOUD}" stroke-opacity="0.05"/>'
+        f'<path d="M0 0V120M0 0H120" stroke="{CLOUD}" stroke-opacity="0.1"/></pattern>'
+    )
+
+
+def ground(dx: float = 0, dy: float = 0) -> str:
+    """The blueprint ground and grid in card coordinates; a link slice shifts it by its own offset."""
+    total = H + SEAM + LINK_HEIGHT
+    return (
+        f'<g transform="translate({dx} {dy})"><rect width="{W}" height="{total}" fill="url(#ground)"/>'
+        f'<rect width="{W}" height="{total}" fill="url(#grid)"/></g>'
+    )
+
+
 def build() -> str:
     return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
   <defs>
@@ -359,20 +399,21 @@ def build() -> str:
       <animate attributeName="width" values="0.01;0.01;{BANNER_W};{BANNER_W}" keyTimes="{key_times(0, SWEEP_START, SWEEP_END, LOOP)}" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
     </rect></clipPath>
     <pattern id="checker" width="24" height="24" patternUnits="userSpaceOnUse" x="{BANNER_X}" y="{BANNER_Y}">
-      <rect width="24" height="24" fill="#1B2130"/><rect width="12" height="12" fill="#262E40"/><rect x="12" y="12" width="12" height="12" fill="#262E40"/>
+      <rect width="24" height="24" fill="{CHECKER[0]}"/><rect width="12" height="12" fill="{CHECKER[1]}"/><rect x="12" y="12" width="12" height="12" fill="{CHECKER[1]}"/>
     </pattern>
     <linearGradient id="scanGlow" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="{VIOLET}" stop-opacity="0"/><stop offset="1" stop-color="{VIOLET}" stop-opacity="0.75"/>
+      <stop offset="0" stop-color="{CLOUD}" stop-opacity="0"/><stop offset="1" stop-color="{CLOUD}" stop-opacity="0.75"/>
     </linearGradient>
     <linearGradient id="tricolore" x1="0" y1="0" x2="{W}" y2="0" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="{FRANCE_BLUE}"/><stop offset="0.5" stop-color="#F5F7FA"/><stop offset="1" stop-color="{FRANCE_RED}"/>
     </linearGradient>
     <linearGradient id="scrim" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="{INK}" stop-opacity="0.55"/><stop offset="0.55" stop-color="{INK}" stop-opacity="0"/>
+      <stop offset="0" stop-color="{NAVY}" stop-opacity="0.6"/><stop offset="0.55" stop-color="{NAVY}" stop-opacity="0"/>
     </linearGradient>
     <filter id="lift" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.45"/></filter>
-    <radialGradient id="redGlow"><stop offset="0" stop-color="{FRANCE_RED}" stop-opacity="0.12"/><stop offset="1" stop-color="{FRANCE_RED}" stop-opacity="0"/></radialGradient>
-    <radialGradient id="violetGlow"><stop offset="0" stop-color="{VIOLET}" stop-opacity="0.16"/><stop offset="1" stop-color="{VIOLET}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="skyGlow"><stop offset="0" stop-color="{SKY}" stop-opacity="0.22"/><stop offset="1" stop-color="{SKY}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="skylight"><stop offset="0" stop-color="{SKY}" stop-opacity="0.55"/><stop offset="1" stop-color="{SKY}" stop-opacity="0"/></radialGradient>
+    {ground_defs()}
   </defs>
   <style>
     text {{ font-family: {SANS}; }}
@@ -381,11 +422,14 @@ def build() -> str:
     .cursor {{ animation: blink 1.1s steps(1) infinite; }}
     @keyframes twinkle {{ 0%, 100% {{ transform: rotate(0deg) scale(1) }} 50% {{ transform: rotate(45deg) scale(0.75) }} }}
     .spark {{ transform-box: fill-box; transform-origin: center; animation: twinkle 2.4s ease-in-out infinite; }}
-    @media (prefers-reduced-motion: reduce) {{ .cursor, .spark {{ animation: none; }} }}
+    @keyframes draw {{ from {{ stroke-dashoffset: 1 }} to {{ stroke-dashoffset: 0 }} }}
+    .drawn {{ stroke-dasharray: 1; animation: draw 3.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both; }}
+    @media (prefers-reduced-motion: reduce) {{ .cursor, .spark, .drawn {{ animation: none; }} }}
   </style>
   <g clip-path="url(#panel)">
-    <rect width="{W}" height="{H}" fill="{INK}"/>
-    <circle cx="90" cy="{H - RED_GLOW_LIFT}" r="300" fill="url(#redGlow)"/>
+    {ground()}
+    <circle cx="500" cy="230" r="560" fill="url(#skylight)" opacity="0.5"/>
+    <path class="drawn" d="{SKYLINE}" stroke="{CLOUD}" stroke-opacity="0.38" stroke-width="1.4" stroke-linejoin="round" pathLength="1"/>
     <rect width="{W}" height="3" fill="url(#tricolore)"/>
   </g>
 {hero()}
@@ -444,14 +488,13 @@ def link_slice(index: int) -> str:
   <defs><clipPath id="panel"><rect x="{-offset}" y="-20" width="{W}" height="{LINK_HEIGHT + 20}" rx="20"/></clipPath></defs>
   <style>text {{ font-family: {SANS}; }} .mono {{ font-family: {MONO}; }}</style>
   <g clip-path="url(#panel)">
-    <rect x="{-offset}" width="{W}" height="{LINK_HEIGHT}" fill="{INK}"/>
-    <circle cx="{90 - offset}" cy="{-RED_GLOW_LIFT - SEAM}" r="300" fill="url(#redGlow)"/>
+    {ground(-offset, -H - SEAM)}
     <rect x="{-offset}" y="{LINK_HEIGHT - 3}" width="{W}" height="3" fill="url(#tricolore)"/>
   </g>
   <defs><linearGradient id="tricolore" x1="{-offset}" y1="0" x2="{W - offset}" y2="0" gradientUnits="userSpaceOnUse">
     <stop offset="0" stop-color="{FRANCE_BLUE}"/><stop offset="0.5" stop-color="#F5F7FA"/><stop offset="1" stop-color="{FRANCE_RED}"/>
   </linearGradient>
-  <radialGradient id="redGlow"><stop offset="0" stop-color="{FRANCE_RED}" stop-opacity="0.12"/><stop offset="1" stop-color="{FRANCE_RED}" stop-opacity="0"/></radialGradient></defs>
+  {ground_defs()}</defs>
   <rect x="{card_x}" y="20" width="{card_w}" height="70" rx="14" fill="{PANEL}" stroke="{LINE}"/>
   {link_icon(kind, card_x + 16, 35)}
   <text x="{card_x + 70}" y="51" font-size="17" font-weight="700" fill="{TEXT}">{esc(title)}</text>
