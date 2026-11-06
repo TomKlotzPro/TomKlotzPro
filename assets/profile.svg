@@ -1,6 +1,6 @@
 <svg width="1000" height="1440" viewBox="0 0 1000 1440" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
   <defs>
-    <clipPath id="panel"><rect width="1000" height="1440" rx="24"/></clipPath>
+    <clipPath id="panel"><rect width="1000" height="1464" rx="24"/></clipPath>
     <clipPath id="bannerClip"><rect x="56" y="92" width="888" height="480" rx="18"/></clipPath>
     <clipPath id="sweepClip"><rect x="56" y="92" height="480" width="0.01">
       <animate attributeName="width" values="0.01;0.01;888;888" keyTimes="0.0000;0.0769;0.2308;1.0000" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="13.0s" begin="0.5s" repeatCount="indefinite"/>
@@ -34,7 +34,6 @@
     <rect width="1000" height="1440" fill="#0B0E14"/>
     <circle cx="90" cy="1400" r="300" fill="url(#redGlow)"/>
     <rect width="1000" height="3" fill="url(#tricolore)"/>
-    <rect y="1437" width="1000" height="3" fill="url(#tricolore)"/>
   </g>
 
   <!-- Hero: the Photoroom trick, played on the author's own portrait. Layers, bottom to top: the photo,

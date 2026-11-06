@@ -59,6 +59,9 @@ VIOLET = "#8B6CFF"
 GREEN = "#3FB950"
 
 W = 1000
+RED_GLOW_LIFT = 40
+# The README top-aligns the card (align="top") so GitHub leaves no line-box gap between it and the links.
+SEAM = 0
 CAREER_Y = 728
 CHANGELOG_Y = CAREER_Y + 320
 CHANGELOG_H = 60 + 42 * len(CHANGELOG)
@@ -350,7 +353,7 @@ def footer() -> str:
 def build() -> str:
     return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
   <defs>
-    <clipPath id="panel"><rect width="{W}" height="{H}" rx="24"/></clipPath>
+    <clipPath id="panel"><rect width="{W}" height="{H + 24}" rx="24"/></clipPath>
     <clipPath id="bannerClip"><rect x="{BANNER_X}" y="{BANNER_Y}" width="{BANNER_W}" height="{BANNER_H}" rx="18"/></clipPath>
     <clipPath id="sweepClip"><rect x="{BANNER_X}" y="{BANNER_Y}" height="{BANNER_H}" width="0.01">
       <animate attributeName="width" values="0.01;0.01;{BANNER_W};{BANNER_W}" keyTimes="{key_times(0, SWEEP_START, SWEEP_END, LOOP)}" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="{LOOP}s" begin="0.5s" repeatCount="indefinite"/>
@@ -382,9 +385,8 @@ def build() -> str:
   </style>
   <g clip-path="url(#panel)">
     <rect width="{W}" height="{H}" fill="{INK}"/>
-    <circle cx="90" cy="{H - 40}" r="300" fill="url(#redGlow)"/>
+    <circle cx="90" cy="{H - RED_GLOW_LIFT}" r="300" fill="url(#redGlow)"/>
     <rect width="{W}" height="3" fill="url(#tricolore)"/>
-    <rect y="{H - 3}" width="{W}" height="3" fill="url(#tricolore)"/>
   </g>
 {hero()}
 {career()}
@@ -402,7 +404,10 @@ LINKS = [
     ("link-photoroom.svg", "Photoroom", "photoroom.com", "photoroom"),
     ("link-pixelheim.svg", "Pixelheim", "my retro pixel-art RPG", "pixelheim"),
 ]
-LINK_WIDTHS = [333, 334, 333]
+# The cards line up with the card's content column (x 56 to 944), so the slices are cut in the gaps between them.
+LINK_GAP = 20
+LINK_CARD_W = (W - 2 * 56 - 2 * LINK_GAP) / 3
+LINK_WIDTHS = [349, 302, 349]
 LINK_HEIGHT = 112
 
 SWORD = [
@@ -433,23 +438,25 @@ def link_slice(index: int) -> str:
     file_name, title, detail, kind = LINKS[index]
     width = LINK_WIDTHS[index]
     offset = sum(LINK_WIDTHS[:index])
-    card_x = 20 if index == 0 else 10
-    card_w = width - card_x - (20 if index == len(LINKS) - 1 else 10)
+    card_w = LINK_CARD_W
+    card_x = round(56 + index * (LINK_CARD_W + LINK_GAP) - offset, 2)
     return f"""<svg width="{width}" height="{LINK_HEIGHT}" viewBox="0 0 {width} {LINK_HEIGHT}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{title}: {detail}">
-  <defs><clipPath id="panel"><rect x="{-offset}" width="{W}" height="{LINK_HEIGHT}" rx="20"/></clipPath></defs>
+  <defs><clipPath id="panel"><rect x="{-offset}" y="-20" width="{W}" height="{LINK_HEIGHT + 20}" rx="20"/></clipPath></defs>
   <style>text {{ font-family: {SANS}; }} .mono {{ font-family: {MONO}; }}</style>
   <g clip-path="url(#panel)">
     <rect x="{-offset}" width="{W}" height="{LINK_HEIGHT}" fill="{INK}"/>
+    <circle cx="{90 - offset}" cy="{-RED_GLOW_LIFT - SEAM}" r="300" fill="url(#redGlow)"/>
     <rect x="{-offset}" y="{LINK_HEIGHT - 3}" width="{W}" height="3" fill="url(#tricolore)"/>
   </g>
   <defs><linearGradient id="tricolore" x1="{-offset}" y1="0" x2="{W - offset}" y2="0" gradientUnits="userSpaceOnUse">
     <stop offset="0" stop-color="{FRANCE_BLUE}"/><stop offset="0.5" stop-color="#F5F7FA"/><stop offset="1" stop-color="{FRANCE_RED}"/>
-  </linearGradient></defs>
+  </linearGradient>
+  <radialGradient id="redGlow"><stop offset="0" stop-color="{FRANCE_RED}" stop-opacity="0.12"/><stop offset="1" stop-color="{FRANCE_RED}" stop-opacity="0"/></radialGradient></defs>
   <rect x="{card_x}" y="20" width="{card_w}" height="70" rx="14" fill="{PANEL}" stroke="{LINE}"/>
   {link_icon(kind, card_x + 16, 35)}
   <text x="{card_x + 70}" y="51" font-size="17" font-weight="700" fill="{TEXT}">{esc(title)}</text>
   <text x="{card_x + 70}" y="72" class="mono" font-size="13" fill="{MUTED}">{esc(detail)}</text>
-  <text x="{card_x + card_w - 18}" y="61" text-anchor="end" font-size="18" fill="{FAINT}">↗</text>
+  <path d="M{card_x + card_w - 31} 50 l9 -9 m-7 0 h7 v7" stroke="{FAINT}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 """
 
