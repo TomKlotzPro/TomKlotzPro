@@ -44,8 +44,9 @@ CHANGELOG = [
 ]
 
 # ── Palette: a blueprint on GitHub's own canvas, with a light and a dark card ──
-# The ground is GitHub's page colour, the blueprint is sky-blue linework, and only the hero (whoami, the photo and
-# the name) is a solid blue block. The README's <picture> shows the card matching the viewer's GitHub theme: GitHub
+# The ground is transparent, so the card takes the page colour of any GitHub theme (light #ffffff, dark #0d1117,
+# dark dimmed #22272e, high contrast #010409...); the blueprint is sky-blue linework, borders and box fills are
+# translucent tints, and only the hero (whoami, the photo and the name) is a solid blue block. The README's <picture> shows the card matching the viewer's GitHub theme: GitHub
 # wraps it in <themed-picture>, which rewrites the media query from that setting, not just the OS.
 # Every text holds 4.5:1 against what is behind it (3:1 when large), a grid line under it included.
 
@@ -59,8 +60,8 @@ FRANCE_BLUE = "#2A63F6"
 FRANCE_RED = "#E5484D"
 THEMES = {
     "light": dict(
-        PAGE="#FFFFFF", HERO="#0969DA", TEXT="#1F2328", SUB="#1F2328", MUTED="#59636E", FAINT="#59636E",
-        ACCENT="#0969DA", LINE="#D0D7DE", PANEL="#FFFFFF", LOG_PANEL="#F6F8FA", LOG_TAB="#EAEEF2",
+        HERO="#0969DA", TEXT="#1F2328", SUB="#1F2328", MUTED="#59636E", FAINT="#59636E", ACCENT="#0969DA",
+        LINE="#1F2328", LINE_OPACITY=0.2, TINT="#1F2328", LOG_PANEL=0.03, LOG_TAB=0.06,  # tint opacities
         BLUE="#0969DA", GREEN="#116329", LINEWORK="#0969DA", GRID=(0.07, 0.12), SKYLINE_OPACITY=0.45, HEAD_GLOW=0.1,
         HERO_TEXT=CLOUD, HERO_TILDE=CLOUD,  # lime is 4.2:1 on GitHub blue, too low for 15 px text
         # node fill, ring, glyph: one blue family toward a lime present; the rings hold 3:1 on the page
@@ -68,15 +69,17 @@ THEMES = {
         PRESENT="#0969DA", HEAD_EDGE="#7F9010",  # arrow and HEAD pulse; lime alone vanishes on white
     ),
     "dark": dict(
-        PAGE="#0D1117", HERO="#0E2A4F", TEXT="#E6EDF3", SUB="#C9D1D9", MUTED="#9198A1", FAINT="#9198A1",
-        ACCENT="#4493F8", LINE="#30363D", PANEL="#0D1117", LOG_PANEL="#161B22", LOG_TAB="#21262D",
+        HERO="#0E2A4F", TEXT="#E6EDF3", SUB="#C9D1D9", MUTED="#A0A8B1", FAINT="#A0A8B1", ACCENT="#4493F8",  # muted holds 4.5:1 on dimmed boxes
+        LINE="#FFFFFF", LINE_OPACITY=0.15, TINT="#FFFFFF", LOG_PANEL=0.04, LOG_TAB=0.08,
         BLUE=LIME, GREEN=LIME, LINEWORK="#4493F8", GRID=(0.09, 0.14), SKYLINE_OPACITY=0.5, HEAD_GLOW=0.18,
         HERO_TEXT="#E6F1FC", HERO_TILDE=LIME,
         NODES=[("#1F4E8C", "#4493F8", "#FFFFFF"), ("#2F6FC4", "#4493F8", "#FFFFFF"), ("#4493F8", "#4493F8", "#0D1117"), (LIME, "#4493F8", NAVY)],
         PRESENT=LIME, HEAD_EDGE=LIME,
     ),
 }
-# The palette is module-level, like the rest of the generator; the build loop switches it per theme.
+# The palette is module-level, like the rest of the generator; the build loop switches it per theme, so both
+# themes must set the same names or one would silently keep the other's value.
+assert THEMES["light"].keys() == THEMES["dark"].keys(), set(THEMES["light"]) ^ set(THEMES["dark"])
 globals().update(THEMES["light"])
 
 W = 1000
@@ -132,7 +135,7 @@ def flag(x: float, y: float, height: float = 16) -> str:
         f'<rect x="{x}" y="{y}" width="{w}" height="{height}" rx="2" fill="{FRANCE_BLUE}"/>'
         f'<rect x="{x + w}" y="{y}" width="{w}" height="{height}" fill="#F5F7FA"/>'
         f'<rect x="{x + 2 * w}" y="{y}" width="{w}" height="{height}" rx="2" fill="{FRANCE_RED}"/>'
-        f'<rect x="{x}" y="{y}" width="{3 * w}" height="{height}" rx="2" stroke="{LINE}" stroke-width="0.75"/>'
+        f'<rect x="{x}" y="{y}" width="{3 * w}" height="{height}" rx="2" stroke="{LINE}" stroke-opacity="{LINE_OPACITY}" stroke-width="0.75"/>'
     )
 
 
@@ -235,7 +238,7 @@ def hero() -> str:
   </g>
   <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" stroke="{CLOUD}" stroke-width="1.5"/>
 
-  <rect x="{x + 16}" y="{chip_y}" width="300" height="42" rx="21" fill="{CHIP}" fill-opacity="0.86" stroke="{LINE}"/>
+  <rect x="{x + 16}" y="{chip_y}" width="300" height="42" rx="21" fill="{CHIP}" fill-opacity="0.86" stroke="{LINE}" stroke-opacity="{LINE_OPACITY}"/>
   <g transform="translate({x + 38} {chip_y + 21})">
     <path class="spark" d="M0 -10 C1.2 -3 3 -1.2 10 0 C3 1.2 1.2 3 0 10 C-1.2 3 -3 1.2 -10 0 C-3 -1.2 -1.2 -3 0 -10 Z" fill="{LIME}"/>
   </g>
@@ -280,7 +283,7 @@ def career() -> str:
             f"""
     <g opacity="0">{appear}
       {label}
-      <circle cx="{cx}" cy="{line_y}" r="0" fill="{PAGE}" stroke="{ring}" stroke-width="2.5">{grow.format(r=24)}</circle>
+      <circle cx="{cx}" cy="{line_y}" r="0" fill="none" stroke="{ring}" stroke-width="2.5">{grow.format(r=24)}</circle>
       <circle cx="{cx}" cy="{line_y}" r="0" fill="{fill}">{grow.format(r=16)}</circle>
       {mark}
       <text x="{cx}" y="{line_y + 56}" text-anchor="middle" font-size="19" font-weight="700" fill="{TEXT}">{esc(company)}</text>
@@ -292,13 +295,16 @@ def career() -> str:
     head_x = xs[-1]
     return f"""
   <!-- Career: a git graph that draws itself, HEAD lands on Photoroom -->
-  <line x1="56" y1="{y0}" x2="944" y2="{y0}" stroke="{LINE}"/>
+  <line x1="56" y1="{y0}" x2="944" y2="{y0}" stroke="{LINE}" stroke-opacity="{LINE_OPACITY}"/>
   {prompt(56, y0 + 52, 'git log --reverse --graph <tspan fill="' + FAINT + '">career/</tspan>')}
   <circle cx="{head_x}" cy="{line_y}" r="150" fill="url(#skyGlow)"/>
   <defs><linearGradient id="careerLine" x1="96" y1="0" x2="940" y2="0" gradientUnits="userSpaceOnUse">
     {"".join(f'<stop offset="{(x - 96) / length:.3f}" stop-color="{fill}"/>' for x, (fill, _, _) in zip(xs, NODES))}<stop offset="1" stop-color="{LIME}"/>
-  </linearGradient></defs>
-  <line x1="96" y1="{line_y}" x2="940" y2="{line_y}" stroke="url(#careerLine)" stroke-width="2" stroke-dasharray="{length}" stroke-dashoffset="{length}">
+  </linearGradient>
+  <mask id="nodeGaps" maskUnits="userSpaceOnUse" x="0" y="{line_y - 30}" width="{W}" height="60">
+    <rect y="{line_y - 30}" width="{W}" height="60" fill="#FFFFFF"/>{"".join(f'<circle cx="{x}" cy="{line_y}" r="24" fill="#000000"/>' for x in xs)}
+  </mask></defs>
+  <line x1="96" y1="{line_y}" x2="940" y2="{line_y}" stroke="url(#careerLine)" mask="url(#nodeGaps)" stroke-width="2" stroke-dasharray="{length}" stroke-dashoffset="{length}">
     <animate attributeName="stroke-dashoffset" from="{length}" to="0" begin="{draw_begin}s" dur="{draw_dur}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
   </line>
   <path d="M948 {line_y} l-11 -6 v12 z" fill="{PRESENT}" opacity="0">
@@ -351,10 +357,10 @@ def changelog() -> str:
     return f"""
   <!-- Highlights, typed into a changelog (clips start at 0.01: Safari ignores an empty clip) -->
   <g transform="translate(56 {y0})">
-    <rect width="888" height="{CHANGELOG_H}" rx="{RADIUS}" fill="{LOG_PANEL}" stroke="{LINE}"/>
-    <path d="M0 {RADIUS} a{RADIUS} {RADIUS} 0 0 1 {RADIUS} -{RADIUS} h{144 - RADIUS} v36 h-144 z" fill="{LOG_TAB}"/>
+    <rect width="888" height="{CHANGELOG_H}" rx="{RADIUS}" fill="{TINT}" fill-opacity="{LOG_PANEL}" stroke="{LINE}" stroke-opacity="{LINE_OPACITY}"/>
+    <path d="M0 {RADIUS} a{RADIUS} {RADIUS} 0 0 1 {RADIUS} -{RADIUS} h{144 - RADIUS} v36 h-144 z" fill="{TINT}" fill-opacity="{LOG_TAB}"/>
     <text x="22" y="24" class="mono" font-size="14" fill="{SUB}">CHANGELOG.md</text>
-    <line x1="0" y1="36" x2="888" y2="36" stroke="{LINE}"/>
+    <line x1="0" y1="36" x2="888" y2="36" stroke="{LINE}" stroke-opacity="{LINE_OPACITY}"/>
   </g>
   {"".join(rows)}
   <g opacity="0">
@@ -368,7 +374,7 @@ def footer() -> str:
     y = FOOTER_Y
     return f"""
   <!-- Sign-off -->
-  <line x1="56" y1="{y - 46}" x2="944" y2="{y - 46}" stroke="{LINE}"/>
+  <line x1="56" y1="{y - 46}" x2="944" y2="{y - 46}" stroke="{LINE}" stroke-opacity="{LINE_OPACITY}"/>
   {prompt(56, y + 12, 'exit <tspan fill="' + GREEN + '">0</tspan>')}
   {flag(424, y - 8, 14)}
   <text x="452" y="{y + 4}" font-size="17" font-weight="600" fill="{TEXT}">Made in Paris</text>
@@ -398,12 +404,9 @@ def grid(grid_id: str, colour: str, minor: float, major: float) -> str:
 
 
 def ground(dx: float = 0, dy: float = 0) -> str:
-    """GitHub's page colour with the blueprint grid, in card coordinates; a link slice shifts it by its own offset."""
+    """The blueprint grid over the page, in card coordinates; a link slice shifts it by its own offset."""
     total = H + SEAM + LINK_HEIGHT
-    return (
-        f'<g transform="translate({dx} {dy})"><rect width="{W}" height="{total}" fill="{PAGE}"/>'
-        f'<rect width="{W}" height="{total}" fill="url(#grid)"/></g>'
-    )
+    return f'<g transform="translate({dx} {dy})"><rect width="{W}" height="{total}" fill="url(#grid)"/></g>'
 
 
 def build() -> str:
@@ -506,7 +509,7 @@ def link_slice(index: int) -> str:
     {ground(-offset, -H - SEAM)}
   </g>
   <defs>{grid("grid", LINEWORK, *GRID)}</defs>
-  <rect x="{card_x}" y="20" width="{card_w}" height="70" rx="{RADIUS}" fill="{PANEL}" stroke="{LINE}"/>
+  <rect x="{card_x}" y="20" width="{card_w}" height="70" rx="{RADIUS}" fill="none" stroke="{LINE}" stroke-opacity="{LINE_OPACITY}"/>
   {link_icon(kind, card_x + 16, 35)}
   <text x="{card_x + 70}" y="51" font-size="17" font-weight="700" fill="{TEXT}">{esc(title)}</text>
   <text x="{card_x + 70}" y="72" class="mono" font-size="13" fill="{MUTED}">{esc(detail)}</text>
