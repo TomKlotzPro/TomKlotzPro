@@ -1,6 +1,6 @@
-<svg width="1000" height="1382" viewBox="0 0 1000 1382" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
+<svg width="1000" height="1424" viewBox="0 0 1000 1424" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 880+ pull requests merged and 660+ reviewed in 9 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%, and now building Video Ad Maker, AI video ads from product photos.">
   <defs>
-    <clipPath id="panel"><rect width="1000" height="1406" rx="7"/></clipPath>
+    <clipPath id="panel"><rect width="1000" height="1448" rx="7"/></clipPath>
     <clipPath id="bannerClip"><rect x="56" y="92" width="888" height="440" rx="18"/></clipPath>
     <clipPath id="sweepClip"><rect x="56" y="92" height="440" width="0.01">
       <animate attributeName="width" values="0.01;0.01;888;888" keyTimes="0.0000;0.0769;0.2308;1.0000" calcMode="spline" keySplines="0 0 1 1; 0.45 0 0.2 1; 0 0 1 1" dur="13.0s" begin="0.5s" repeatCount="indefinite"/>
@@ -32,11 +32,11 @@
     @media (prefers-reduced-motion: reduce) { .cursor, .spark, .drawn { animation: none; } }
   </style>
   <g clip-path="url(#panel)">
-    <g transform="translate(0 0)"><rect width="1000" height="1494" fill="url(#grid)"/></g>
+    <g transform="translate(0 0)"><rect width="1000" height="1536" fill="url(#grid)"/></g>
     <rect width="1000" height="552" fill="#0969DA"/>
     <rect width="1000" height="552" fill="url(#heroGrid)"/>
     <circle cx="500" cy="220" r="330" fill="url(#skylight)" opacity="0.6"/>
-    <path transform="translate(0 -58)" class="drawn" d="M0 1440 V1414 h40 l10 -14 h60 l10 14 h20 v-22 h8 v22 h30 l12 -18 h70 l12 18 h24 v-10 h6 v10 h40 l14 -20 h84 l14 20 h30 v-16 h8 v16 h50 l10 -12 h56 l10 12 h20 v-24 h6 v24 h34 l12 -16 h70 l12 16 h30 l10 -12 h40 l10 12 h18 v-18 h8 v18 h42 l14 -20 h80 l14 20 h29 V1440 M694 1440 L718 1388 L723 1356 L726 1334 L728 1318 L730 1334 L733 1356 L738 1388 L762 1440 M703 1418 H753 M713 1392 H743 M720 1362 H736 M705 1418 L740 1392 M751 1418 L716 1392 M715 1392 L734 1362 M741 1392 L722 1362 M712 1440 Q728 1424 744 1440" stroke="#0969DA" stroke-opacity="0.45" stroke-width="1.4" stroke-linejoin="round" pathLength="1"/>
+    <path transform="translate(0 -16)" class="drawn" d="M0 1440 V1414 h40 l10 -14 h60 l10 14 h20 v-22 h8 v22 h30 l12 -18 h70 l12 18 h24 v-10 h6 v10 h40 l14 -20 h84 l14 20 h30 v-16 h8 v16 h50 l10 -12 h56 l10 12 h20 v-24 h6 v24 h34 l12 -16 h70 l12 16 h30 l10 -12 h40 l10 12 h18 v-18 h8 v18 h42 l14 -20 h80 l14 20 h29 V1440 M694 1440 L718 1388 L723 1356 L726 1334 L728 1318 L730 1334 L733 1356 L738 1388 L762 1440 M703 1418 H753 M713 1392 H743 M720 1362 H736 M705 1418 L740 1392 M751 1418 L716 1392 M715 1392 L734 1362 M741 1392 L722 1362 M712 1440 Q728 1424 744 1440" stroke="#0969DA" stroke-opacity="0.45" stroke-width="1.4" stroke-linejoin="round" pathLength="1"/>
   </g>
 
   <!-- Hero: the Photoroom trick, played on the author's own portrait. Layers, bottom to top: the photo,
@@ -149,7 +149,7 @@
 
   <!-- Highlights, typed into a changelog (clips start at 0.01: Safari ignores an empty clip) -->
   <g transform="translate(56 1004)">
-    <rect width="888" height="228" rx="7" fill="#1F2328" fill-opacity="0.03" stroke="#1F2328" stroke-opacity="0.2"/>
+    <rect width="888" height="270" rx="7" fill="#1F2328" fill-opacity="0.03" stroke="#1F2328" stroke-opacity="0.2"/>
     <path d="M0 7 a7 7 0 0 1 7 -7 h137 v36 h-144 z" fill="#1F2328" fill-opacity="0.06"/>
     <text x="22" y="24" class="mono" font-size="14" fill="#1F2328">CHANGELOG.md</text>
     <line x1="0" y1="36" x2="888" y2="36" stroke="#1F2328" stroke-opacity="0.2"/>
@@ -170,7 +170,7 @@
     </rect></clipPath>
     <text x="84" y="1130" class="mono" font-size="17" fill="#59636E" text-anchor="end">2</text>
     <text x="114" y="1130" class="mono" font-size="17" font-weight="700" fill="#116329" opacity="0">+<animate attributeName="opacity" from="0" to="1" begin="5.08s" dur="0.2s" fill="freeze"/></text>
-    <text x="140" y="1130" class="mono" font-size="17" clip-path="url(#type1)"><tspan fill="#1F2328" font-weight="700">570+</tspan><tspan fill="#1F2328" font-weight="400"> pull requests merged and </tspan><tspan fill="#1F2328" font-weight="700">540+</tspan><tspan fill="#1F2328" font-weight="400"> reviewed, in 8 months</tspan></text>
+    <text x="140" y="1130" class="mono" font-size="17" clip-path="url(#type1)"><tspan fill="#1F2328" font-weight="700">880+</tspan><tspan fill="#1F2328" font-weight="400"> pull requests merged and </tspan><tspan fill="#1F2328" font-weight="700">660+</tspan><tspan fill="#1F2328" font-weight="400"> reviewed, in 9 months</tspan></text>
     <rect y="1114" width="10" height="20" fill="#0969DA" opacity="0">
       <animate attributeName="x" from="140" to="740" begin="5.08s" dur="1.15s" fill="freeze"/>
       <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.01;0.98;1" begin="5.08s" dur="1.40s" fill="remove"/>
@@ -193,20 +193,30 @@
     <text x="140" y="1214" class="mono" font-size="17" clip-path="url(#type3)"><tspan fill="#1F2328" font-weight="400">Design system: Code Connect coverage from </tspan><tspan fill="#1F2328" font-weight="700">22% to 95%</tspan></text>
     <rect y="1198" width="10" height="20" fill="#0969DA" opacity="0">
       <animate attributeName="x" from="140" to="697" begin="8.33s" dur="1.07s" fill="freeze"/>
-      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.01;0.98;1" begin="8.33s" dur="1.17s" fill="freeze"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.01;0.98;1" begin="8.33s" dur="1.32s" fill="remove"/>
+    </rect>
+    <clipPath id="type4"><rect x="140" y="1234" height="32" width="0.01">
+      <animate attributeName="width" from="0.01" to="653" begin="9.75s" dur="1.26s" fill="freeze"/>
+    </rect></clipPath>
+    <text x="84" y="1256" class="mono" font-size="17" fill="#59636E" text-anchor="end">5</text>
+    <text x="114" y="1256" class="mono" font-size="17" font-weight="700" fill="#116329" opacity="0">+<animate attributeName="opacity" from="0" to="1" begin="9.75s" dur="0.2s" fill="freeze"/></text>
+    <text x="140" y="1256" class="mono" font-size="17" clip-path="url(#type4)"><tspan fill="#1F2328" font-weight="400">Now building </tspan><tspan fill="#1F2328" font-weight="700">Video Ad Maker</tspan><tspan fill="#1F2328" font-weight="400">, AI video ads from product photos</tspan></text>
+    <rect y="1240" width="10" height="20" fill="#0969DA" opacity="0">
+      <animate attributeName="x" from="140" to="793" begin="9.75s" dur="1.26s" fill="freeze"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.01;0.98;1" begin="9.75s" dur="1.36s" fill="freeze"/>
     </rect>
   <g opacity="0">
-    <animate attributeName="opacity" from="0" to="1" begin="9.40s" dur="0.01s" fill="freeze"/>
-    <rect class="cursor" x="701" y="1198" width="10" height="20" fill="#0969DA"/>
+    <animate attributeName="opacity" from="0" to="1" begin="11.01s" dur="0.01s" fill="freeze"/>
+    <rect class="cursor" x="797" y="1240" width="10" height="20" fill="#0969DA"/>
   </g>
 
 
   <!-- Sign-off -->
-  <line x1="56" y1="1246" x2="944" y2="1246" stroke="#1F2328" stroke-opacity="0.2"/>
-  <text x="56" y="1304" class="mono" font-size="15" fill="#59636E"><tspan fill="#0969DA">~</tspan> $ exit <tspan fill="#116329">0</tspan></text>
-  <rect x="424" y="1284" width="7.0" height="14" rx="2" fill="#2A63F6"/><rect x="431.0" y="1284" width="7.0" height="14" fill="#F5F7FA"/><rect x="438.0" y="1284" width="7.0" height="14" rx="2" fill="#E5484D"/><rect x="424" y="1284" width="21.0" height="14" rx="2" stroke="#1F2328" stroke-opacity="0.2" stroke-width="0.75"/>
-  <text x="452" y="1296" font-size="17" font-weight="600" fill="#1F2328">Made in Paris</text>
-  <text x="500" y="1324" text-anchor="middle" class="mono" font-size="14" fill="#59636E">liberté · égalité · déployé</text>
-  <text x="944" y="1304" text-anchor="end" class="mono" font-size="14" fill="#59636E">@TomKlotzPro</text>
+  <line x1="56" y1="1288" x2="944" y2="1288" stroke="#1F2328" stroke-opacity="0.2"/>
+  <text x="56" y="1346" class="mono" font-size="15" fill="#59636E"><tspan fill="#0969DA">~</tspan> $ exit <tspan fill="#116329">0</tspan></text>
+  <rect x="424" y="1326" width="7.0" height="14" rx="2" fill="#2A63F6"/><rect x="431.0" y="1326" width="7.0" height="14" fill="#F5F7FA"/><rect x="438.0" y="1326" width="7.0" height="14" rx="2" fill="#E5484D"/><rect x="424" y="1326" width="21.0" height="14" rx="2" stroke="#1F2328" stroke-opacity="0.2" stroke-width="0.75"/>
+  <text x="452" y="1338" font-size="17" font-weight="600" fill="#1F2328">Made in Paris</text>
+  <text x="500" y="1366" text-anchor="middle" class="mono" font-size="14" fill="#59636E">liberté · égalité · déployé</text>
+  <text x="944" y="1346" text-anchor="end" class="mono" font-size="14" fill="#59636E">@TomKlotzPro</text>
 
 </svg>
