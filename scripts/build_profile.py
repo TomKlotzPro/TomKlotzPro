@@ -35,12 +35,13 @@ CAREER = [
     (None, "Photoroom", "AI photo editing", "software engineering, since 2026", "P"),
 ]
 # Photoroom since Feb 16, 2026. Counts from `gh search prs --owner Photoroom --author @me --merged`
-# and `--reviewed-by @me` (2026-10-06); Code Connect coverage from the July 31 audit (367/385).
+# and `--reviewed-by @me` excluding my own (2026-11-27); Code Connect coverage from the July 31 audit (367/385).
 CHANGELOG = [
     [("Rookie of the Year", None, 700), (" at Photoroom, in my first 4.5 months", None, 400)],
-    [("570+", None, 700), (" pull requests merged and ", None, 400), ("540+", None, 700), (" reviewed, in 8 months", None, 400)],
+    [("880+", None, 700), (" pull requests merged and ", None, 400), ("660+", None, 700), (" reviewed, in 9 months", None, 400)],
     [("Shipped ", None, 400), ("Virtual Models, AI Video Gen, Share Links, Recommended edits", None, 700)],
     [("Design system: Code Connect coverage from ", None, 400), ("22% to 95%", None, 700)],
+    [("Now building ", None, 400), ("Video Ad Maker", None, 700), (", AI video ads from product photos", None, 400)],
 ]
 
 # ── Palette: a blueprint on GitHub's own canvas, with a light and a dark card ──
@@ -410,7 +411,7 @@ def ground(dx: float = 0, dy: float = 0) -> str:
 
 
 def build() -> str:
-    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 570+ pull requests merged and 540+ reviewed in 8 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%.">
+    return f"""<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tom Klotz, software engineer at Photoroom in Paris. His name is set like a magazine cover over his portrait; an animation removes the photo's background so he steps in front of his own name, then swaps in AI backgrounds made with Photoroom, outer space then Paris at dusk. Then a git graph of his career: Algolia, CastorDoc, Ministère des Armées, Photoroom. Highlights: Rookie of the Year in his first 4.5 months, 880+ pull requests merged and 660+ reviewed in 9 months, shipped Virtual Models, AI Video Gen, Share Links and Recommended edits, Code Connect coverage from 22% to 95%, and now building Video Ad Maker, AI video ads from product photos.">
   <defs>
     <clipPath id="panel"><rect width="{W}" height="{H + 24}" rx="{RADIUS}"/></clipPath>
     <clipPath id="bannerClip"><rect x="{BANNER_X}" y="{BANNER_Y}" width="{BANNER_W}" height="{BANNER_H}" rx="18"/></clipPath>
